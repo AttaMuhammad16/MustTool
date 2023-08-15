@@ -17,26 +17,23 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
 import kotlin.math.pow
 
-class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
+class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
-    private lateinit var magnetSensor: Sensor
+    private lateinit var gyroSensor: Sensor
     private lateinit var lineChart: LineChart
     private val entries = ArrayList<Entry>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_magnetic_filed)
+        setContentView(R.layout.activity_gyro_scope)
         lineChart = findViewById(R.id.lineChart)
 
-
-        // Initialize sensor manager and magnet sensor
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
-        if (magnetSensor != null) {
-            sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        if (gyroSensor != null) {
+            sensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@GyroScopeActivity, "Gyroscope Sensor not available.", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -44,31 +41,36 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         super.onDestroy()
         sensorManager.unregisterListener(this)
     }
+
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            val magnitude = Math.sqrt(
-                event.values[0].toDouble().pow(2.0) +
-                        event.values[1].toDouble().pow(2.0) +
-                        event.values[2].toDouble().pow(2.0)
+        if (event.sensor.type == Sensor.TYPE_GYROSCOPE) {
+            val gyroX = event.values[0]
+            val gyroY = event.values[1]
+            val gyroZ = event.values[2]
+
+            // Calculate the magnitude of the gyroscope vector
+            val gyroMagnitude = Math.sqrt(
+                gyroX.toDouble().pow(2.0) +
+                        gyroY.toDouble().pow(2.0) +
+                        gyroZ.toDouble().pow(2.0)
             ).toFloat()
 
             // Add new data entry to the chart
-            entries.add(Entry(entries.size.toFloat(), magnitude))
+            entries.add(Entry(entries.size.toFloat(), gyroMagnitude))
 
             // Update the line chart
-            updateLineChart(magnitude.toString())
+            updateLineChart(gyroMagnitude.toString())
         }
     }
 
-
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // No need to handle accuracy changes for gyroscope
     }
 
-
-    private fun updateLineChart(magnitude:String) {
-        val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
-        dataSet.color = Color.CYAN // color
-        dataSet.setDrawCircles(false) // color
+    private fun updateLineChart(gyroMagnitude: String) {
+        val dataSet = LineDataSet(entries, "$gyroMagnitude rad/s")
+        dataSet.color = Color.GREEN
+        dataSet.setDrawCircles(false)
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f
 
@@ -77,7 +79,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.invalidate()
 
         val description = Description()
-        description.text = "Magnetic Field "
+        description.text = "Gyroscope Data"
         lineChart.description = description
 
         // Customize appearance
@@ -91,6 +93,6 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
-
     }
+
 }

@@ -15,60 +15,53 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
-import kotlin.math.pow
 
-class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
+class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
-    private lateinit var magnetSensor: Sensor
+    private lateinit var lightSensor: Sensor
     private lateinit var lineChart: LineChart
     private val entries = ArrayList<Entry>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_magnetic_filed)
+        setContentView(R.layout.activity_light_measure)
         lineChart = findViewById(R.id.lineChart)
 
-
-        // Initialize sensor manager and magnet sensor
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
-        if (magnetSensor != null) {
-            sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        if (lightSensor != null) {
+            sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@LightMeasureActivity, "Light Sensor not available.", Toast.LENGTH_LONG).show()
         }
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         sensorManager.unregisterListener(this)
     }
+
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            val magnitude = Math.sqrt(
-                event.values[0].toDouble().pow(2.0) +
-                        event.values[1].toDouble().pow(2.0) +
-                        event.values[2].toDouble().pow(2.0)
-            ).toFloat()
+        if (event.sensor.type == Sensor.TYPE_LIGHT) {
+            val lightIntensity = event.values[0]
 
             // Add new data entry to the chart
-            entries.add(Entry(entries.size.toFloat(), magnitude))
+            entries.add(Entry(entries.size.toFloat(), lightIntensity))
 
             // Update the line chart
-            updateLineChart(magnitude.toString())
+            updateLineChart(lightIntensity.toString())
         }
     }
 
-
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // No need to handle accuracy changes for light sensor
     }
 
-
-    private fun updateLineChart(magnitude:String) {
-        val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
-        dataSet.color = Color.CYAN // color
-        dataSet.setDrawCircles(false) // color
+    private fun updateLineChart(lightIntensity: String) {
+        val dataSet = LineDataSet(entries, "$lightIntensity lux")
+        dataSet.color = Color.RED
+        dataSet.setDrawCircles(false)
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f
 
@@ -77,7 +70,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.invalidate()
 
         val description = Description()
-        description.text = "Magnetic Field "
+        description.text = "Light Intensity"
         lineChart.description = description
 
         // Customize appearance
@@ -91,6 +84,6 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
-
     }
+
 }

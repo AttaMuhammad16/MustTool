@@ -17,26 +17,26 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
 import kotlin.math.pow
 
-class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
+
+class GravityActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
-    private lateinit var magnetSensor: Sensor
+    private lateinit var gravitySensor: Sensor
     private lateinit var lineChart: LineChart
     private val entries = ArrayList<Entry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_magnetic_filed)
+        setContentView(R.layout.activity_gravity)
+
         lineChart = findViewById(R.id.lineChart)
 
-
-        // Initialize sensor manager and magnet sensor
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
 
-        if (magnetSensor != null) {
-            sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        if (gravitySensor != null) {
+            sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@GravityActivity, "Gravity Sensor not available.", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -44,31 +44,35 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         super.onDestroy()
         sensorManager.unregisterListener(this)
     }
+
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            val magnitude = Math.sqrt(
-                event.values[0].toDouble().pow(2.0) +
-                        event.values[1].toDouble().pow(2.0) +
-                        event.values[2].toDouble().pow(2.0)
-            ).toFloat()
+        if (event.sensor.type == Sensor.TYPE_GRAVITY) {
+            val gravityX = event.values[0]
+            val gravityY = event.values[1]
+            val gravityZ = event.values[2]
+
+            // Calculate the magnitude of the gravity vector
+            val gravityMagnitude = Math.sqrt(gravityX.toDouble().pow(2.0) + gravityY.toDouble().pow(2.0) + gravityZ.toDouble().pow(2.0)).toFloat()
 
             // Add new data entry to the chart
-            entries.add(Entry(entries.size.toFloat(), magnitude))
+            entries.add(Entry(entries.size.toFloat(), gravityMagnitude))
 
             // Update the line chart
-            updateLineChart(magnitude.toString())
+            updateLineChart(gravityMagnitude.toString())
         }
     }
 
 
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // No need to handle accuracy changes for step counter
     }
 
 
-    private fun updateLineChart(magnitude:String) {
-        val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
-        dataSet.color = Color.CYAN // color
-        dataSet.setDrawCircles(false) // color
+    private fun updateLineChart(gravityMagnitude: String) {
+        val dataSet = LineDataSet(entries, "$gravityMagnitude m/s²")
+        dataSet.color = Color.GREEN
+        dataSet.setDrawCircles(false)
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f
 
@@ -77,7 +81,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.invalidate()
 
         val description = Description()
-        description.text = "Magnetic Field "
+        description.text = "Gravity"
         lineChart.description = description
 
         // Customize appearance
@@ -93,4 +97,5 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
 
     }
+
 }

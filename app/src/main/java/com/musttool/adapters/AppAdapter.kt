@@ -35,6 +35,10 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
                 4 -> intent = Intent(holder.itemView.context, WhatsAppActivity::class.java)
                 5 -> intent = Intent(holder.itemView.context, TextExtracter::class.java)
                 6 -> intent = Intent(holder.itemView.context, MagneticFiledActivity::class.java)
+                7 -> intent = Intent(holder.itemView.context, Acceleration::class.java)
+                8 -> intent = Intent(holder.itemView.context, GravityActivity::class.java)
+                9 -> intent = Intent(holder.itemView.context, LightMeasureActivity::class.java)
+                10 -> intent = Intent(holder.itemView.context, GyroScopeActivity::class.java)
             }
             intent?.putExtra("book", list[position].title)
             holder.itemView.context.startActivity(intent)

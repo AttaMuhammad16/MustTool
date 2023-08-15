@@ -29,6 +29,18 @@
         android:theme="@style/Theme.MustTool"
         tools:targetApi="31">
         <activity
+            android:name=".activities.GyroScopeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LightMeasureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.GravityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Acceleration"
+            android:exported="false" />
+        <activity
             android:name=".activities.MagneticFiledActivity"
             android:exported="false" />
         <activity
