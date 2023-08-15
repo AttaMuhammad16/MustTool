@@ -86,13 +86,13 @@ class MainActivity : AppCompatActivity() {
         apps.add(AppModel("Diary", R.drawable.notes_bac))
         apps.add(AppModel("Message Sender", R.drawable.wht))
         apps.add(AppModel("Text Extractor", R.drawable.text_extractor))
+        apps.add(AppModel("Magnetic Filed Detector", R.drawable.magnet))
 
         recyclerView = findViewById(R.id.recyclerView)
         layoutManger = GridLayoutManager(this, 3)
         recyclerView.layoutManager = layoutManger
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
-
 
     }
 

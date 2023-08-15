@@ -29,6 +29,9 @@
         android:theme="@style/Theme.MustTool"
         tools:targetApi="31">
         <activity
+            android:name=".activities.MagneticFiledActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CropeActivity"
             android:exported="false" />
         <activity

@@ -34,6 +34,7 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
                 3 -> intent = Intent(holder.itemView.context, NotesApp::class.java)
                 4 -> intent = Intent(holder.itemView.context, WhatsAppActivity::class.java)
                 5 -> intent = Intent(holder.itemView.context, TextExtracter::class.java)
+                6 -> intent = Intent(holder.itemView.context, MagneticFiledActivity::class.java)
             }
             intent?.putExtra("book", list[position].title)
             holder.itemView.context.startActivity(intent)
