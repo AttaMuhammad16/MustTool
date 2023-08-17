@@ -28,6 +28,7 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
         holder.itemView.setOnClickListener {
             var intent: Intent? = null
             when (position) {
+
                 0 -> intent = Intent(holder.itemView.context, GenQRActivity::class.java)
                 1 -> intent = Intent(holder.itemView.context, BarCodeScanner::class.java)
                 2 -> intent = Intent(holder.itemView.context, TemperatureConverter::class.java)
@@ -39,6 +40,13 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
                 8 -> intent = Intent(holder.itemView.context, GravityActivity::class.java)
                 9 -> intent = Intent(holder.itemView.context, LightMeasureActivity::class.java)
                 10 -> intent = Intent(holder.itemView.context, GyroScopeActivity::class.java)
+                11 -> intent = Intent(holder.itemView.context, CompassActivity::class.java)
+                12 -> intent = Intent(holder.itemView.context, CalculatoreActivity::class.java)
+                13 -> intent = Intent(holder.itemView.context, FlashLightActivity::class.java)
+                14 -> intent = Intent(holder.itemView.context, DeviceInfoActivity::class.java)
+                15 -> intent = Intent(holder.itemView.context, CPUInfoActivity::class.java)
+
+
             }
             intent?.putExtra("book", list[position].title)
             holder.itemView.context.startActivity(intent)

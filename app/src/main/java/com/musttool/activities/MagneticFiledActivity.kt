@@ -8,7 +8,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -21,15 +23,16 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var magnetSensor: Sensor
     private lateinit var lineChart: LineChart
+    private lateinit var magneticFieldValue: TextView
     private val entries = ArrayList<Entry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_magnetic_filed)
         lineChart = findViewById(R.id.lineChart)
+        magneticFieldValue = findViewById(R.id.magneticFieldValue)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
 
-
-        // Initialize sensor manager and magnet sensor
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
@@ -57,6 +60,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
 
             // Update the line chart
             updateLineChart(magnitude.toString())
+            magneticFieldValue.text=magnitude.toString()
         }
     }
 
@@ -67,7 +71,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
 
     private fun updateLineChart(magnitude:String) {
         val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
-        dataSet.color = Color.CYAN // color
+        dataSet.color = Color.RED // color
         dataSet.setDrawCircles(false) // color
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f

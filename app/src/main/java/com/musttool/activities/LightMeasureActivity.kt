@@ -8,7 +8,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -20,11 +22,14 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var lightSensor: Sensor
     private lateinit var lineChart: LineChart
+    private lateinit var lightValue: TextView
     private val entries = ArrayList<Entry>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_light_measure)
         lineChart = findViewById(R.id.lineChart)
+        lightValue = findViewById(R.id.lightValue)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.light)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
@@ -51,6 +56,7 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
 
             // Update the line chart
             updateLineChart(lightIntensity.toString())
+            lightValue.text=lightIntensity.toString()
         }
     }
 
@@ -60,7 +66,7 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
 
     private fun updateLineChart(lightIntensity: String) {
         val dataSet = LineDataSet(entries, "$lightIntensity lux")
-        dataSet.color = Color.RED
+        dataSet.color = Color.YELLOW
         dataSet.setDrawCircles(false)
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f

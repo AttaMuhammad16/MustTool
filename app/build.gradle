@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.musttool"
-        minSdk 21
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -83,6 +83,15 @@ dependencies {
 
     // magnetic field chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+
+    // compass(direction)
+    implementation 'com.github.derysudrajat:compass-qibla:1.0.0'
+
+
+    // device info
+    implementation 'com.an.deviceinfo:deviceinfo:0.1.5'
+
 
 
 }

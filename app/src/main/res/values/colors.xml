@@ -30,5 +30,10 @@
     <color name="color18">#34C759</color>
     <color name="color19">#009688</color>
 
+    <color name="mag">#0A8E9F</color>
+    <color name="acc">#07BAA9</color>
+    <color name="grav">#09B4CA</color>
+    <color name="light">#0AAEC5</color>
+    <color name="gyro">#0694D5</color>
 
 </resources>

@@ -8,7 +8,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -22,13 +24,17 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var gravitySensor: Sensor
     private lateinit var lineChart: LineChart
+    private lateinit var gravityValue: TextView
     private val entries = ArrayList<Entry>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gravity)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.grav)
+
 
         lineChart = findViewById(R.id.lineChart)
+        gravityValue = findViewById(R.id.gravityValue)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
@@ -51,27 +57,22 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
             val gravityY = event.values[1]
             val gravityZ = event.values[2]
 
-            // Calculate the magnitude of the gravity vector
             val gravityMagnitude = Math.sqrt(gravityX.toDouble().pow(2.0) + gravityY.toDouble().pow(2.0) + gravityZ.toDouble().pow(2.0)).toFloat()
 
-            // Add new data entry to the chart
             entries.add(Entry(entries.size.toFloat(), gravityMagnitude))
 
-            // Update the line chart
             updateLineChart(gravityMagnitude.toString())
+            gravityValue.text=gravityMagnitude.toString()
         }
     }
-
-
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // No need to handle accuracy changes for step counter
     }
 
-
     private fun updateLineChart(gravityMagnitude: String) {
         val dataSet = LineDataSet(entries, "$gravityMagnitude m/s²")
-        dataSet.color = Color.GREEN
+        dataSet.color = Color.MAGENTA
         dataSet.setDrawCircles(false)
         dataSet.setDrawValues(true)
         dataSet.valueTextSize = 12f

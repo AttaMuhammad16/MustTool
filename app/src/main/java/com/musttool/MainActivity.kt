@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var navDrwer: NavigationView
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,6 +82,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+
+
         apps.add(AppModel("QR Generator", R.drawable.qr))
         apps.add(AppModel("Bar code & Qr Code\n Scanner", R.drawable.qrc))
         apps.add(AppModel("Temperature Converter", R.drawable.converter))
@@ -89,8 +93,14 @@ class MainActivity : AppCompatActivity() {
         apps.add(AppModel("Magnetic Filed Detector", R.drawable.magnet))
         apps.add(AppModel("Acceleration Meter", R.drawable.accelerartion))
         apps.add(AppModel("Gravity Meter", R.drawable.gravity))
-        apps.add(AppModel("Light Measurement / Lux meter", R.drawable.light))
+        apps.add(AppModel("Light Measurement/ Lux meter", R.drawable.light))
         apps.add(AppModel("Gyroscope Testing", R.drawable.gyroscope))
+        apps.add(AppModel("Compass(direction)", R.drawable.navigation))
+        apps.add(AppModel("Calculator", R.drawable.calculator))
+        apps.add(AppModel("Flash Light", R.drawable.flashlight))
+        apps.add(AppModel("Device Info", R.drawable.baseline_perm_device_information_24))
+        apps.add(AppModel("CPU Info", R.drawable.cpu))
+
 
         recyclerView = findViewById(R.id.recyclerView)
         layoutManger = GridLayoutManager(this, 3)

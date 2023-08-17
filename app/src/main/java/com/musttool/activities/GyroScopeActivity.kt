@@ -8,7 +8,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -21,11 +23,15 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var gyroSensor: Sensor
     private lateinit var lineChart: LineChart
+    private lateinit var gyroValue: TextView
     private val entries = ArrayList<Entry>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gyro_scope)
         lineChart = findViewById(R.id.lineChart)
+        gyroValue = findViewById(R.id.gyroValue)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.gyro)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
@@ -60,6 +66,7 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
 
             // Update the line chart
             updateLineChart(gyroMagnitude.toString())
+            gyroValue.text=gyroMagnitude.toString()
         }
     }
 
