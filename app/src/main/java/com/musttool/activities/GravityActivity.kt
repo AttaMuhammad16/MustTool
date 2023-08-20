@@ -37,13 +37,14 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
         gravityValue = findViewById(R.id.gravityValue)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
 
-        if (gravitySensor != null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)!=null) {
+            gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
             sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@GravityActivity, "Gravity Sensor not available.", Toast.LENGTH_LONG).show()
         }
+
     }
 
     override fun onDestroy() {
@@ -74,7 +75,7 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
         val dataSet = LineDataSet(entries, "$gravityMagnitude m/s²")
         dataSet.color = Color.MAGENTA
         dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(true)
+        dataSet.setDrawValues(false)
         dataSet.valueTextSize = 12f
 
         val data = LineData(dataSet)

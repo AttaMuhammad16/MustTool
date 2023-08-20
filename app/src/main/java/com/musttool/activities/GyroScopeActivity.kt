@@ -34,10 +34,11 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.gyro)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null) {
 
-        if (gyroSensor != null) {
+            gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
             sensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL)
+
         } else {
             Toast.makeText(this@GyroScopeActivity, "Gyroscope Sensor not available.", Toast.LENGTH_LONG).show()
         }
@@ -78,7 +79,7 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
         val dataSet = LineDataSet(entries, "$gyroMagnitude rad/s")
         dataSet.color = Color.GREEN
         dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(true)
+        dataSet.setDrawValues(false)
         dataSet.valueTextSize = 12f
 
         val data = LineData(dataSet)

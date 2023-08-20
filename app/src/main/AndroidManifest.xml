@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_MEMORY" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -35,6 +36,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MustTool"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.UserLocation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RamUseage"
+            android:exported="false" />
+        <activity
+            android:name=".TestActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity
+            android:name=".activities.SOSFlashLightActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AvailableSensors"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BatteryInfo"
+            android:exported="false" />
         <activity
             android:name=".activities.CPUInfoActivity"
             android:exported="false" />

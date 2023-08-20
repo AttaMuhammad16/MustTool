@@ -32,9 +32,9 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.light)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
-        if (lightSensor != null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!=null) {
+            lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
             sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@LightMeasureActivity, "Light Sensor not available.", Toast.LENGTH_LONG).show()
@@ -68,7 +68,7 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
         val dataSet = LineDataSet(entries, "$lightIntensity lux")
         dataSet.color = Color.YELLOW
         dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(true)
+        dataSet.setDrawValues(false)
         dataSet.valueTextSize = 12f
 
         val data = LineData(dataSet)
@@ -90,6 +90,7 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
         lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
         lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
+
     }
 
 }

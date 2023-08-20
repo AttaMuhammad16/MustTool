@@ -118,6 +118,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         var ScreenHeight = device.screenHeight
         var ScreenWidth = device.screenWidth
 
+
         manufacturer.text=Manufacturer.toString()
         deviceNum.text=deviced.toString()
         version.text=ReleaseBuildVersion.toString()
@@ -136,8 +137,8 @@ class DeviceInfoActivity : AppCompatActivity() {
         val date = Date(timestampMillis)
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
         val formattedDate = dateFormat.format(date)
-        buildTime.text=formattedDate
 
+        buildTime.text=formattedDate
         buildUser.text=BuildUser.toString()
         serialNumber.text=Serial.toString()
         osVersion.text=OsVersion.toString()
@@ -146,50 +147,6 @@ class DeviceInfoActivity : AppCompatActivity() {
         screenDensity.text=ScreenDensity.toString()
         screenHeight.text=ScreenHeight.toString()
         screenWidth.text=ScreenWidth.toString()
-
-
-        Log.i("TAG", "Manufacturer: $Manufacturer")
-        Log.i("TAG", "Device: $deviced")
-        Log.i("TAG", "Release Build Version: $ReleaseBuildVersion")
-        Log.i("TAG", "Build Version Code Name: $BuildVersionCodeName")
-        Log.i("TAG", "Model: $Model")
-        Log.i("TAG", "Product: $Product")
-        Log.i("TAG", "Fingerprint: $hasFingerprint")
-        Log.i("TAG", "Hardware: $Hardware")
-        Log.i("TAG", "Radio Version: $RadioVersion")
-        Log.i("TAG", "Board: $Board")
-        Log.i("TAG", "Display Version: $DisplayVersion")
-        Log.i("TAG", "Build Brand: $BuildBrand")
-        Log.i("TAG", "Build Host: $BuildHost")
-        Log.i("TAG", "Build Time: $BuildTime")
-        Log.i("TAG", "Build User: $BuildUser")
-        Log.i("TAG", "Serial: $Serial")
-        Log.i("TAG", "OS Version: $OsVersion")
-        Log.i("TAG", "Language: $Language")
-        Log.i("TAG", "SDK Version: $SDKVersion")
-        Log.i("TAG", "Screen Density: $ScreenDensity")
-        Log.i("TAG", "Screen Height: $ScreenHeight")
-        Log.i("TAG", "Screen Width: $ScreenWidth")
-
-
-
-
-
-
-
-
-        // battery info
-        val battery = Battery(this)
-
-        var batteryHealth = battery.batteryHealth
-        var batteryPercent = battery.batteryPercent
-        var batteryTechnology = battery.batteryTechnology
-        var batteryVoltage = battery.batteryVoltage
-        var batteryTemperature = battery.batteryTemperature
-        var isBatteryPresent = battery.isBatteryPresent
-        var chargingSource = battery.chargingSource
-        var isPhoneCharging = battery.isPhoneCharging
-
 
 
         // memory

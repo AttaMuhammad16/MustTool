@@ -100,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         apps.add(AppModel("Flash Light", R.drawable.flashlight))
         apps.add(AppModel("Device Info", R.drawable.baseline_perm_device_information_24))
         apps.add(AppModel("CPU Info", R.drawable.cpu))
+        apps.add(AppModel("Battery Info", R.drawable.battery))
+        apps.add(AppModel("Available Sensors", R.drawable.sensor))
+        apps.add(AppModel("SOS FlashLight", R.drawable.sos))
+        apps.add(AppModel("Memory Usage", R.drawable.ram))
 
 
         recyclerView = findViewById(R.id.recyclerView)

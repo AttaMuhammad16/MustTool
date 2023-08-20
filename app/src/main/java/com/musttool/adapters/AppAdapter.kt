@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.musttool.R
 import com.musttool.activities.*
 import com.musttool.models.AppModel
@@ -23,7 +24,8 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = list[position].title
-        holder.itemImage.setImageResource(list[position].img)
+        Glide.with(context).load(list[position].img).into(holder.itemImage)
+
 
         holder.itemView.setOnClickListener {
             var intent: Intent? = null
@@ -45,9 +47,13 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
                 13 -> intent = Intent(holder.itemView.context, FlashLightActivity::class.java)
                 14 -> intent = Intent(holder.itemView.context, DeviceInfoActivity::class.java)
                 15 -> intent = Intent(holder.itemView.context, CPUInfoActivity::class.java)
-
+                16 -> intent = Intent(holder.itemView.context, BatteryInfo::class.java)
+                17 -> intent = Intent(holder.itemView.context, AvailableSensors::class.java)
+                18 -> intent = Intent(holder.itemView.context, SOSFlashLightActivity::class.java)
+                19 -> intent = Intent(holder.itemView.context, RamUseage::class.java)
 
             }
+
             intent?.putExtra("book", list[position].title)
             holder.itemView.context.startActivity(intent)
         }

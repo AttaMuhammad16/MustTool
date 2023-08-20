@@ -32,11 +32,10 @@ class Acceleration : AppCompatActivity() , SensorEventListener {
         accelerationValue = findViewById(R.id.accelerationValue)
         window.statusBarColor = ContextCompat.getColor(this, R.color.acc)
 
-        // Initialize sensor manager and magnet sensor
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        if (accelerometerSensor != null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!=null) {
+            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
             sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@Acceleration, "Accelerometer Sensor not available.", Toast.LENGTH_LONG).show()
@@ -71,7 +70,7 @@ class Acceleration : AppCompatActivity() , SensorEventListener {
         val dataSet = LineDataSet(entries, "$accelerationMagnitude m/s²")
         dataSet.color = Color.BLUE
         dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(true)
+        dataSet.setDrawValues(false)
         dataSet.valueTextSize = 12f
 
         val data = LineData(dataSet)

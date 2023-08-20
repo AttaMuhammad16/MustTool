@@ -34,9 +34,9 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
-        if (magnetSensor != null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!=null) {
+            magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
             sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
@@ -73,7 +73,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
         dataSet.color = Color.RED // color
         dataSet.setDrawCircles(false) // color
-        dataSet.setDrawValues(true)
+        dataSet.setDrawValues(false)
         dataSet.valueTextSize = 12f
 
         val data = LineData(dataSet)
