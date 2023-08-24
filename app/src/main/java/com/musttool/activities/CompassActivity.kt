@@ -29,6 +29,7 @@ class CompassActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compass)
+
         tvDirection=findViewById(R.id.tvDirection)
         ivCompass=findViewById(R.id.ivCompass)
         ivNeedle=findViewById(R.id.ivNeedle)

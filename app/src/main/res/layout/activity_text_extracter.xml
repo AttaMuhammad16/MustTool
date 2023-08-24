@@ -12,9 +12,10 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="430dp"
+            android:layout_marginTop="470dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +68,6 @@
             android:id="@+id/extractBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/color2"
             android:text="Extract"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -79,7 +79,6 @@
             android:id="@+id/clearText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/color19"
             android:text="Clear"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +90,6 @@
             android:id="@+id/copyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/color18"
             android:text="Copy"
             app:layout_constraintBottom_toBottomOf="parent"

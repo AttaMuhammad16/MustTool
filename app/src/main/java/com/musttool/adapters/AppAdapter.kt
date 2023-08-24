@@ -51,6 +51,8 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
                 17 -> intent = Intent(holder.itemView.context, AvailableSensors::class.java)
                 18 -> intent = Intent(holder.itemView.context, SOSFlashLightActivity::class.java)
                 19 -> intent = Intent(holder.itemView.context, RamUseage::class.java)
+                20 -> intent = Intent(holder.itemView.context, UserLocation::class.java)
+                21 -> intent = Intent(holder.itemView.context, LanguageTranslateActivity::class.java)
 
             }
 

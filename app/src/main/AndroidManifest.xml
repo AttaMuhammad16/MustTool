@@ -37,6 +37,9 @@
         android:theme="@style/Theme.MustTool"
         tools:targetApi="31">
         <activity
+            android:name=".activities.LanguageTranslateActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.UserLocation"
             android:exported="false" />
         <activity
@@ -146,7 +149,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

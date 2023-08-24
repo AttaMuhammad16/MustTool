@@ -98,6 +98,7 @@ class BarCodeScanner : AppCompatActivity(), SurfaceHolder.Callback {
             }
         }
     }
+
     override fun surfaceChanged(p0: SurfaceHolder, format: Int, width: Int, height: Int) {}
     override fun surfaceDestroyed(p0: SurfaceHolder) {
         cameraSource.stop()

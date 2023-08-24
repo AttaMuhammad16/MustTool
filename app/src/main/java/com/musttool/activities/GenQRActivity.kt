@@ -30,18 +30,17 @@ class GenQRActivity : AppCompatActivity() {
     lateinit var edt: EditText
     lateinit var btn:Button
     lateinit var share:Button
-    lateinit var save:Button
     lateinit var bitmap: Bitmap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gen_qractivity)
         window.statusBarColor = ContextCompat.getColor(this, R.color.temperatureActivityColor)
+
         edt = findViewById(R.id.edt);
         imageQR = findViewById(R.id.imageQR);
         btn = findViewById(R.id.btn);
-
         share = findViewById(R.id.share);
-        save = findViewById(R.id.save);
 
         btn.setOnClickListener {
             val txt = edt.text.toString().trim()
@@ -53,13 +52,6 @@ class GenQRActivity : AppCompatActivity() {
             }
         }
 
-        save.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 10)
-            } else {
-                saveBitmapToStorage(bitmap)
-            }
-        }
         share.setOnClickListener{
             if(bitmap!=null){
                 val imageUri: Uri = getImageUri(this, bitmap)
@@ -71,6 +63,7 @@ class GenQRActivity : AppCompatActivity() {
                 startActivity(Intent.createChooser(shareIntent, "Share image via"))
             }
         }
+
     }
     private fun generateQRCode(value: String): Bitmap? {
         val bitMatrix: BitMatrix
@@ -88,76 +81,11 @@ class GenQRActivity : AppCompatActivity() {
         return bitmap
     }
 
-//private fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
-//    val file = File(Environment.getExternalStorageDirectory().absolutePath + "$fileName.png")
-//    try {
-//        val stream = FileOutputStream(file)
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-//        stream.flush()
-//        stream.close()
-//    } catch (e: IOException) {
-//        e.printStackTrace()
-//        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-//    }
-//}
-//    private fun saveBitmapToStorage(bitmap: Bitmap, fileName: String) {
-//        val root = Environment.getExternalStorageDirectory().absolutePath
-//        val myDir = File("$root/saved_images")
-//        myDir.mkdirs()
-//
-//        val file = File(myDir, fileName)
-//        if (file.exists()) Toast.makeText(this, "file already exists", Toast.LENGTH_SHORT).show()
-//        try {
-//            val out = FileOutputStream(file)
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-//            out.flush()
-//            out.close()
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//    }
-
-
-    fun saveBitmapToStorage(bitmap: Bitmap) {
-        val folder = File(Environment.getExternalStorageDirectory().toString()+"/MyAppFolder")
-        if (!folder.exists()) {
-            folder.mkdirs()
-        }
-
-        val file = File(folder, "MyImage.png")
-        val stream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        stream.flush()
-        stream.close()
-
-        // Scan the newly created image file to add it to the system gallery
-//        MediaScannerConnection.scanFile(this,arrayOf(file.toString()),null
-//        ) { path, _ ->
-//            Log.i("TAG","Image saved successfully: $path")
-//        }
-    }
-
-
     fun getImageUri(context: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "Image", null)
         return Uri.parse(path)
-    }
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (10) { 10 -> {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                saveBitmapToStorage(bitmap)
-                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Permission denied, unable to save", Toast.LENGTH_SHORT).show()
-            }
-            return
-        }
-        }
     }
 
 }

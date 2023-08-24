@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class NotesApp : AppCompatActivity() {
+
     lateinit var mustToolDatabase: MustToolDatabase
     lateinit var addBtn:FloatingActionButton
     lateinit var notesRecycler:RecyclerView

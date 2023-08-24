@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fromLanguages">
+        <item>English</item>
+
+
+        <item>Arabic</item>
+        <item>Afrikaans</item>
+        <item>Akan</item>
+        <item>Albanian</item>
+        <item>Amharic</item>
+        <item>Armenian</item>
+        <item>Assamese</item>
+        <item>Aymara</item>
+        <item>Azerbaijani</item>
+
+
+        <item>Bambara</item>
+        <item>Bengali(Bangla)</item>
+        <item>Basque</item>
+        <item>Belarusian</item>
+        <item>Bhojpuri</item>
+        <item>Bosnian</item>
+        <item>Bulgarian</item>
+        <item>Burmese</item>
+
+
+        <item>Chinese</item>
+        <item>Catalan</item>
+        <item>Cebuano</item>
+        <item>Central Kurdish (Sorani)</item>
+        <item>Corsican</item>
+        <item>Croatian</item>
+        <item>Czech</item>
+
+
+
+
+        <item>Danish</item>
+        <item>Divehi</item>
+        <item>Dogri</item>
+        <item>Dutch</item>
+
+
+        <item>Esperanto</item>
+        <item>Estonian</item>
+        <item>Ewe</item>
+
+
+        <item>French</item>
+        <item>Finnish</item>
+
+
+
+
+
+
+        <item>German</item>
+        <item>Galician</item>
+        <item>Ganda</item>
+        <item>Georgian</item>
+        <item>Goan Konkani</item>
+        <item>Greek</item>
+        <item>Guarani</item>
+        <item>Gujarati</item>
+
+
+
+
+
+
+
+
+        <item>Hindi</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Portuguese</item>
+        <item>Russian</item>
+        <item>Spanish</item>
+        <item>Urdu</item>
+
+    </string-array>
+
+    <string-array name="FromLanguagesCode">
+        <item>en</item>
+
+
+        <item>ar</item>
+        <item>af</item>
+        <item>ak</item>
+        <item>sq</item>
+        <item>am</item>
+        <item>hy</item>
+        <item>as</item>
+        <item>ay</item>
+        <item>az</item>
+
+        <item>bm</item>
+        <item>bn</item>
+        <item>eu</item>
+        <item>be</item>
+        <item>bho</item>
+        <item>bs</item>
+        <item>bg</item>
+        <item>my</item>
+
+
+        <item>zh-CN</item>
+        <item>ca</item>
+        <item>ceb</item>
+        <item>ckb</item>
+        <item>co</item>
+        <item>hr</item>
+        <item>cs</item>
+
+
+
+        <item>da</item>
+        <item>dv</item>
+        <item>doi</item>
+        <item>nl</item>
+
+
+
+        <item>eo</item>
+        <item>et</item>
+        <item>ee</item>
+
+
+        <item>fr</item>
+        <item>fi</item>
+
+
+
+
+        <item>de</item>
+        <item>gl</item>
+        <item>lg</item>
+        <item>ka</item>
+        <item>gom</item>
+        <item>el</item>
+        <item>gn</item>
+        <item>gu</item>
+
+
+
+
+
+
+
+
+        <item>hi</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>es</item>
+        <item>ur</item>
+
+    </string-array>
+
+</resources>

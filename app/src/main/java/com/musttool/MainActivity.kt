@@ -104,6 +104,8 @@ class MainActivity : AppCompatActivity() {
         apps.add(AppModel("Available Sensors", R.drawable.sensor))
         apps.add(AppModel("SOS FlashLight", R.drawable.sos))
         apps.add(AppModel("Memory Usage", R.drawable.ram))
+        apps.add(AppModel("User Location", R.drawable.baseline_location_on_24))
+        apps.add(AppModel("Multi\nLanguages Translator", R.drawable.language_translator))
 
 
         recyclerView = findViewById(R.id.recyclerView)
