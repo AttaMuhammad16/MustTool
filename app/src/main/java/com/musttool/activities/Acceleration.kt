@@ -35,7 +35,7 @@ class Acceleration : AppCompatActivity() , SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!=null) {
-            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
             sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@Acceleration, "Accelerometer Sensor not available.", Toast.LENGTH_LONG).show()

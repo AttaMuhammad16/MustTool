@@ -36,7 +36,7 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null) {
 
-            gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+            gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)!!
             sensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
         } else {

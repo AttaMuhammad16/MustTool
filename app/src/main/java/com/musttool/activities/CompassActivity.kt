@@ -81,10 +81,7 @@ class CompassActivity : AppCompatActivity() {
             val endDegree = qiblaDirection.needleAngle
             val duration = 500 // Total duration of the animation in milliseconds
             val frameDuration = duration / frameCount // Duration of each frame
-
             val ivNeedle = findViewById<View>(R.id.ivNeedle) // Replace with your ImageView
-
-
 
 
             val rotateNeedle = RotateAnimation(

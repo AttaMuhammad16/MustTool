@@ -163,7 +163,6 @@ class DeviceInfoActivity : AppCompatActivity() {
         val availableInternalMemorySizeGB = availableInternalMemorySizeBytes / (1024.0 * 1024 * 1024)
 
 
-
         // user location
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Location permission is granted, you can proceed to use LocationInfo

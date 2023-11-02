@@ -36,7 +36,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!=null) {
-            magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
             sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
@@ -47,6 +47,7 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         super.onDestroy()
         sensorManager.unregisterListener(this)
     }
+
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
             val magnitude = Math.sqrt(

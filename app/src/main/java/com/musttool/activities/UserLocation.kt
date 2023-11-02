@@ -35,7 +35,6 @@ class UserLocation : AppCompatActivity() {
             val locationInfo = LocationInfo(this)
             val location = locationInfo.location
 
-
             val city = location.city
             val latitude = location.latitude
             val longitude = location.longitude
@@ -43,13 +42,13 @@ class UserLocation : AppCompatActivity() {
             val state = location.state
             val addressLine1 = location.addressLine1
 
+
             cityTv.text=city.toString()
             latitudeTv.text=latitude.toString()
             longitudeTv.text=longitude.toString()
             countryCodeTv.text=countryCode.toString()
             stateTv.text=state.toString()
             addressLine1Tv.text=addressLine1.toString()
-
 
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)

@@ -39,7 +39,7 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)!=null) {
-            gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+            gravitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)!!
             sensorManager.registerListener(this, gravitySensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@GravityActivity, "Gravity Sensor not available.", Toast.LENGTH_LONG).show()

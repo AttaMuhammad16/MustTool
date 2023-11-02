@@ -34,7 +34,7 @@ class LightMeasureActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!=null) {
-            lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+            lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)!!
             sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
             Toast.makeText(this@LightMeasureActivity, "Light Sensor not available.", Toast.LENGTH_LONG).show()
