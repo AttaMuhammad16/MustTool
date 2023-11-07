@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "660802678761",
+    "project_id": "musttool-8ca22",
+    "storage_bucket": "musttool-8ca22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:660802678761:android:a59007f8553f2c8f2ae578",
+        "android_client_info": {
+          "package_name": "com.musttool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "660802678761-o5lpkqr28ju6aom238se0ujo302hs1un.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwmSevN9okka_KhgwDdM6h69A79NFoCTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "660802678761-o5lpkqr28ju6aom238se0ujo302hs1un.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
