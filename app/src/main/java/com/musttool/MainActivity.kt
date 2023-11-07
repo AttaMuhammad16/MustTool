@@ -106,6 +106,7 @@ class MainActivity : AppCompatActivity() {
         apps.add(AppModel("Memory Usage", R.drawable.ram))
         apps.add(AppModel("User Location", R.drawable.baseline_location_on_24))
         apps.add(AppModel("Multi\nLanguages Translator", R.drawable.language_translator))
+//        apps.add(AppModel("UrlShortner", R.drawable.language_translator))
 
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -113,8 +114,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManger
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
-
     }
+
 
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)

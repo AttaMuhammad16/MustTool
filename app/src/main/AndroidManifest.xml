@@ -36,12 +36,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MustTool"
         tools:targetApi="31">
-        <activity
-            android:name=".activities.UrlShortenerActivity"
-            android:exported="false" />
+
         <activity
             android:name=".activities.LanguageTranslateActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.UserLocation"
             android:exported="false" />
