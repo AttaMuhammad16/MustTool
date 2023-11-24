@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0C8C80"
-    tools:context=".activities.GenQRActivity">
+    android:background="@color/main_app_color"
+    tools:context=".ui.activities.GenQRActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,21 +15,25 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0AAFA0"
+            android:background="@color/tool_bar_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="    Generate Qr Code"
+            app:title="   Generate Qr Code"
             app:titleTextColor="@color/white" />
 
         <EditText
             android:id="@+id/edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/edt_bac"
             android:hint="Enter Text To Generate Qr Code"
             android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,26 +41,33 @@
 
         <Button
             android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:backgroundTint="#00BCD4"
-            android:text="Generate Code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.46"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttons_color"
+            android:text="Get Qr Code"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/share"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt" />
 
         <Button
             android:id="@+id/share"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:backgroundTint="#00BCD4"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:backgroundTint="@color/buttons_color"
             android:text="Share"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn"
+            app:layout_constraintTop_toBottomOf="@+id/edt" />
 
         <Button
             android:id="@+id/save"
@@ -75,10 +86,24 @@
             android:id="@+id/imageQR"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_250sdp"
+            android:layout_marginTop="@dimen/_60sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/share" />
+            app:layout_constraintTop_toBottomOf="@+id/btn" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnim"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_250sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageQR"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/qr" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

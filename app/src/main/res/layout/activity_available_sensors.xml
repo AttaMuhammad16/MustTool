@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AvailableSensors">
+    tools:context=".ui.activities.AvailableSensors">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBAR"
         android:layout_width="match_parent"

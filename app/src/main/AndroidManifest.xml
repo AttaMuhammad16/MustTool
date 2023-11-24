@@ -31,6 +31,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".utils.App"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -41,14 +42,14 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".activities.LanguageTranslateActivity"
+            android:name=".ui.activities.LanguageTranslateActivity"
             android:exported="false" />
 
         <activity
-            android:name=".activities.UserLocation"
+            android:name=".ui.activities.UserLocation"
             android:exported="false" />
         <activity
-            android:name=".activities.RamUseage"
+            android:name=".ui.activities.RamUseage"
             android:exported="false" />
         <activity
             android:name=".TestActivity"
@@ -56,90 +57,90 @@
         </activity>
 
         <activity
-            android:name=".activities.SOSFlashLightActivity"
+            android:name=".ui.activities.SOSFlashLightActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AvailableSensors"
+            android:name=".ui.activities.AvailableSensors"
             android:exported="false" />
         <activity
-            android:name=".activities.BatteryInfo"
+            android:name=".ui.activities.BatteryInfo"
             android:exported="false" />
         <activity
-            android:name=".activities.CPUInfoActivity"
+            android:name=".ui.activities.CPUInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DeviceInfoActivity"
+            android:name=".ui.activities.DeviceInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FlashLightActivity"
+            android:name=".ui.activities.FlashLightActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CalculatoreActivity"
+            android:name=".ui.activities.CalculatoreActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CompassActivity"
+            android:name=".ui.activities.CompassActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.GyroScopeActivity"
+            android:name=".ui.activities.GyroScopeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LightMeasureActivity"
+            android:name=".ui.activities.LightMeasureActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.GravityActivity"
+            android:name=".ui.activities.GravityActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.Acceleration"
+            android:name=".ui.activities.Acceleration"
             android:exported="false" />
         <activity
-            android:name=".activities.MagneticFiledActivity"
+            android:name=".ui.activities.MagneticFiledActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CropeActivity"
+            android:name=".ui.activities.CropeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.TextExtracter"
+            android:name=".ui.activities.TextExtracter"
             android:exported="false" />
         <activity
-            android:name=".activities.FullNoteActivity"
+            android:name=".ui.activities.FullNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.WhatsAppActivity"
+            android:name=".ui.activities.WhatsAppActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.NotesApp"
+            android:name=".ui.activities.NotesApp"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.TemperatureConverter"
+            android:name=".ui.activities.TemperatureConverter"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.BarCodeScanner"
+            android:name=".ui.activities.BarCodeScanner"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.GenQRActivity"
+            android:name=".ui.activities.GenQRActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>

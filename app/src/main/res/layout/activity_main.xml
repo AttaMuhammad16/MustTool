@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="16dp"
-        android:background="#4EBAEC"
+        android:background="@color/main_app_color"
         tools:layout_editor_absoluteY="39dp">
 
         <include
@@ -27,7 +27,6 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#4EBAEC"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

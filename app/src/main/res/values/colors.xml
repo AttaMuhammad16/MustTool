@@ -7,12 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="myColor">#11CCE4</color>
+    <color name="myColor">#1F2943</color>
     <color name="temperatureActivityColor">#0AAFA0</color>
 
-     <color name="color1">#FF5733</color>
-     <color name="color2">#6A1B9A</color>
-     <color name="color3">#2E7D32</color>
+    <color name="color1">#FF5733</color>
+    <color name="color2">#6A1B9A</color>
+    <color name="color3">#2E7D32</color>
     <color name="color4">#D4C4E3</color>
     <color name="color5">#9387F5</color>
     <color name="color6">#A8DAF0</color>
@@ -28,12 +28,15 @@
     <color name="color16">#FF9500</color>
     <color name="color17">#5AC8FA</color>
     <color name="color18">#34C759</color>
-    <color name="color19">#009688</color>
+    <color name="color19">#202F57</color>
 
     <color name="mag">#0A8E9F</color>
     <color name="acc">#07BAA9</color>
     <color name="grav">#09B4CA</color>
     <color name="light">#0AAEC5</color>
     <color name="gyro">#0694D5</color>
+    <color name="tool_bar_color">#1F2943</color>
+    <color name="main_app_color">#121725</color>
+    <color name="buttons_color">#0C3AB3</color>
 
 </resources>

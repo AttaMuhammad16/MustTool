@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#009688"
     android:layout_height="match_parent"
-    tools:context=".activities.Acceleration">
+    tools:context=".ui.activities.Acceleration">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBAR"
         android:layout_width="match_parent"

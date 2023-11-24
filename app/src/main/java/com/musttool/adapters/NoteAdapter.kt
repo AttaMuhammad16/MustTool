@@ -20,19 +20,11 @@ import com.google.android.material.card.MaterialCardView
 import com.musttool.MustToolDatabase
 import com.musttool.Notes.Note
 import com.musttool.R
-import com.musttool.activities.BarCodeScanner
-import com.musttool.activities.FullNoteActivity
-import com.musttool.activities.GenQRActivity
-import com.musttool.activities.NotesApp
-import com.musttool.activities.TemperatureConverter
-import com.musttool.activities.WhatsAppActivity
-import com.musttool.models.AppModel
+import com.musttool.ui.activities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.ArrayList
-import java.util.Date
 
 class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     private var selectedColor: Int = 0 // Initialize with a default color
