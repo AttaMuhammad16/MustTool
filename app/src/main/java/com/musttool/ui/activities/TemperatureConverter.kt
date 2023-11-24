@@ -6,42 +6,49 @@ import androidx.appcompat.app.AppCompatActivity
 
 import android.app.Activity
 import android.provider.MediaStore.Audio.Radio
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.musttool.R
+import com.musttool.ui.viewmodels.TemperatureConverterViewModel
+import com.musttool.utils.Utils.statusBarColor
+import dagger.hilt.android.AndroidEntryPoint
 
-class TemperatureConverter : Activity() {
+@AndroidEntryPoint
+class TemperatureConverter : AppCompatActivity() {
 
     lateinit var typeSpin: Spinner
     val types = arrayOf("Celsius", "Kelvin", "Fahrenheit")
+    val temperatureConverterViewModel:TemperatureConverterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_temperature_converter)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.temperatureActivityColor)
+        statusBarColor(this,R.color.myColor)
 
         val convert = findViewById<View>(R.id.convert) as Button
         typeSpin = findViewById<View>(R.id.type) as Spinner
 
-        val typeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
+        val typeAdapter = ArrayAdapter(this, R.layout.spinner_items_layout, types)
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
 
         typeSpin!!.setAdapter(typeAdapter)
 
         convert.setOnClickListener {
-                view: View? -> convertFunc()
+            view: View? -> convertFunc()
         }
 
     }
 
     private fun convertFunc() {
-
         val temperatureEdt = findViewById<EditText>(R.id.temperature)
         val temperature = temperatureEdt.text.toString().trim()
-        val tempNo = temperature.toString().toFloat()?:0.0
+        var tempNo = temperature.toDouble()
         val format = typeSpin.selectedItem.toString().trim()
         val answer1 = findViewById<View>(R.id.answer1) as TextView
         val answer2 = findViewById<View>(R.id.answer2) as TextView
@@ -50,38 +57,66 @@ class TemperatureConverter : Activity() {
 
         if (!temperature.isEmpty()) {
             if (format == "Celsius") {
+                val celsiusValue = tempNo
 
-                ans1.text = "Fahrenheit"
-                ans2.text = "Kelvin"
+                temperatureConverterViewModel.apply {
+                    forCelsiusTemperature(celsiusValue)
 
-                val celsiusValue = tempNo.toDouble()
-                val fahrenheitValue = (celsiusValue * 9/5) + 32
-                val kelvinValue = celsiusValue + 273.15
+                    temName1.observe(this@TemperatureConverter) { it ->
+                        ans1.text = it
+                    }
+                    temName2.observe(this@TemperatureConverter) { it ->
+                        ans2.text = it
+                    }
 
-                answer1.text = String.format("%.3f", fahrenheitValue)
-                answer2.text = String.format("%.3f", kelvinValue)
+                    temperature1.observe(this@TemperatureConverter) { it ->
+                        answer1.text = it
+                    }
+                    temperature2.observe(this@TemperatureConverter) { it ->
+                        answer2.text = it
+                    }
+                }
 
             } else if (format == "Kelvin") {
+                val kelvinValue = tempNo
+                temperatureConverterViewModel.apply {
+                    forKelvinTemperature(kelvinValue)
 
-                ans1.text = "Celsius"
-                ans2.text = " Fahrenheit"
+                    temName1.observe(this@TemperatureConverter) { it ->
+                        ans1.text = it
+                    }
+                    temName2.observe(this@TemperatureConverter) { it ->
+                        ans2.text = it
+                    }
 
-                val kelvinValue = tempNo.toDouble()
-                val celsiusValue = kelvinValue - 273.15
-                val fahrenheitValue = (celsiusValue * 9/5) + 32
-
-                answer1.text = String.format("%.3f", celsiusValue)
-                answer2.text = String.format("%.3f", fahrenheitValue)
+                    temperature1.observe(this@TemperatureConverter) { it ->
+                        answer1.text = it
+                    }
+                    temperature2.observe(this@TemperatureConverter) { it ->
+                        answer2.text = it
+                    }
+                }
 
             } else if (format == "Fahrenheit") {
-                ans1.text = "Celsius"
-                ans2.text = "Kelvin"
-                val fahrenheitValue = tempNo.toDouble()
-                val celsiusValue = (fahrenheitValue - 32) * 5/9
-                val kelvinValue = celsiusValue + 273.15
+                val fahrenheitValue = tempNo
+                temperatureConverterViewModel.apply {
+                    forFahrenheitTemperature(fahrenheitValue)
 
-                answer1.text = String.format("%.3f", celsiusValue)
-                answer2.text = String.format("%.3f", kelvinValue)
+                    temName1.observe(this@TemperatureConverter) { it ->
+                        ans1.text = it
+                    }
+                    temName2.observe(this@TemperatureConverter) { it ->
+                        ans2.text = it
+                    }
+
+                    temperature1.observe(this@TemperatureConverter) { it ->
+                        answer1.text = it
+                    }
+                    temperature2.observe(this@TemperatureConverter) { it ->
+                        answer2.text = it
+                    }
+                }
+
             }
         }
 

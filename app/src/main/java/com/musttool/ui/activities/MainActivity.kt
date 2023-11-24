@@ -1,7 +1,6 @@
 package com.musttool.ui.activities
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
@@ -19,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.musttool.R
 import com.musttool.adapters.AppAdapter
 import com.musttool.models.AppModel
+import com.musttool.utils.Utils
 
 
 class MainActivity:AppCompatActivity() {
@@ -39,7 +39,6 @@ class MainActivity:AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
         apps = ArrayList()
-        var toolBar=findViewById<Toolbar>(R.id.toolBAR)
         window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
         var menu=findViewById<ImageButton>(R.id.menu)
 
@@ -50,7 +49,6 @@ class MainActivity:AppCompatActivity() {
                 drawer.openDrawer(GravityCompat.START)
             }
         }
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         drawer = findViewById(R.id.drawer)
@@ -61,11 +59,7 @@ class MainActivity:AppCompatActivity() {
         navDrwer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.share -> {
-                    val shareIntent = Intent(Intent.ACTION_SEND)
-                    shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "MustToolApp")
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.musttool")
-                    startActivity(Intent.createChooser(shareIntent, "Share link via"))
+                   Utils.shareText(this,"MustToolApp","https://play.google.com/store/apps/details?id=com.musttool",)
                 }
                 R.id.contact ->{
                     SweetAlertDialog(this@MainActivity, SweetAlertDialog.NORMAL_TYPE).setTitleText("atta1639916@gmail.com").show()
@@ -73,8 +67,6 @@ class MainActivity:AppCompatActivity() {
             }
             true
         }
-
-
 
         apps.add(AppModel("QR Generator", R.drawable.qr))
         apps.add(AppModel("Bar code & Qr Code\n Scanner", R.drawable.qrc))
@@ -104,23 +96,15 @@ class MainActivity:AppCompatActivity() {
         recyclerView.layoutManager = layoutManger
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
+
     }
 
     override fun onBackPressed() {
-        val builder = AlertDialog.Builder(this)
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            builder.setCancelable(false)
-            builder.setMessage("Do you want to Exit?")
-            builder.setPositiveButton("Yes") { dialog, which ->
-                finishAffinity()
-            }
-            builder.setNegativeButton("No") { dialog, which ->
-                dialog.cancel()
-            }
-            val alert = builder.create()
-            alert.show()
+            Utils.exitDialog(this,"Do you want to Exit?","Yes","No")
         }
     }
+
 }
