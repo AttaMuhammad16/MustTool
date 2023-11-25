@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activities.NotesApp">
+    tools:context=".ui.activities.NotesApp">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -13,24 +13,39 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/search_view_bac"
-        app:iconifiedByDefault="false"
         android:focusable="true"
-        app:queryHint="Search"
+        app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolBar"
+        app:queryHint="Search" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0AAFA0"
+        android:background="@color/tool_bar_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="    Notes"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white">
+
+        <ImageView
+            android:id="@+id/backArrowImg"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="-5dp"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_20sdp"
+            android:text="Notes"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecycler"
@@ -47,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/myColor"
+        android:backgroundTint="@color/buttons_color"
         android:src="@drawable/baseline_add_24"
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

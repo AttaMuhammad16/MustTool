@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.musttool.R
+import com.musttool.utils.Utils
 import io.github.derysudrajat.compassqibla.CompassQibla
 
 class CompassActivity : AppCompatActivity() {
@@ -34,7 +35,9 @@ class CompassActivity : AppCompatActivity() {
         ivCompass=findViewById(R.id.ivCompass)
         ivNeedle=findViewById(R.id.ivNeedle)
         tvLocation=findViewById(R.id.tvLocation)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION)!=null){

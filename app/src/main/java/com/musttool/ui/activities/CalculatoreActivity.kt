@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.musttool.R
+import com.musttool.utils.Utils
 
 class CalculatoreActivity : AppCompatActivity() {
     private lateinit var inputTextView: TextView
@@ -24,7 +25,9 @@ class CalculatoreActivity : AppCompatActivity() {
         inputTextView = findViewById(R.id.input)
         outputTextView = findViewById(R.id.output)
         button_delete = findViewById(R.id.button_delete)
-        window.statusBarColor=ContextCompat.getColor(this@CalculatoreActivity,R.color.black)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
 
         val buttonClickListener = View.OnClickListener { v ->
             val clickedButton = v as Button

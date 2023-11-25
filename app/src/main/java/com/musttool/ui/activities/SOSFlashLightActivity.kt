@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.musttool.R
+import com.musttool.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,8 @@ class SOSFlashLightActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sosflash_light)
         cameraManager = getSystemService(CAMERA_SERVICE) as CameraManager
-        window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
         sosBtn = findViewById(R.id.sosBtn)
         dotBtn = findViewById(R.id.dotBtn)
         dashBtn = findViewById(R.id.dashBtn)

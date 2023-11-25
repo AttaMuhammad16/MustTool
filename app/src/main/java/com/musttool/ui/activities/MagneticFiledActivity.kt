@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.utils.Utils
 import kotlin.math.pow
 
 class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
@@ -31,7 +32,8 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.activity_magnetic_filed)
         lineChart = findViewById(R.id.lineChart)
         magneticFieldValue = findViewById(R.id.magneticFieldValue)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 

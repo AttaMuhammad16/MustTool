@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.musttool.R
+import com.musttool.utils.Utils
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.util.UUID
@@ -18,6 +19,8 @@ class CropeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crope)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         var bundle=intent.getStringExtra("DATA")
         uri=Uri.parse(bundle)

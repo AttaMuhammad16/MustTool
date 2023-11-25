@@ -6,20 +6,20 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.utils.Utils
 import kotlin.math.pow
 
-class Acceleration : AppCompatActivity() , SensorEventListener {
+class Acceleration : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometerSensor: Sensor
     private lateinit var lineChart: LineChart
@@ -30,15 +30,24 @@ class Acceleration : AppCompatActivity() , SensorEventListener {
         setContentView(R.layout.activity_acceleration)
         lineChart = findViewById(R.id.lineChart)
         accelerationValue = findViewById(R.id.accelerationValue)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.acc)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!=null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
-            sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL)
+            sensorManager.registerListener(
+                this,
+                accelerometerSensor,
+                SensorManager.SENSOR_DELAY_NORMAL
+            )
         } else {
-            Toast.makeText(this@Acceleration, "Accelerometer Sensor not available.", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this@Acceleration,
+                "Accelerometer Sensor not available.",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
     }
@@ -59,7 +68,7 @@ class Acceleration : AppCompatActivity() , SensorEventListener {
             entries.add(Entry(entries.size.toFloat(), accelerationMagnitude))
 
             updateLineChart(accelerationMagnitude.toString())
-            accelerationValue.text=accelerationMagnitude.toString()
+            accelerationValue.text = accelerationMagnitude.toString()
         }
     }
 

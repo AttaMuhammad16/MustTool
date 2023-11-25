@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.musttool.R
 import com.musttool.adapters.AvailableSensorsAdapter
+import com.musttool.utils.Utils
 
 class AvailableSensors : AppCompatActivity() {
     lateinit var recycler:RecyclerView
@@ -17,8 +18,9 @@ class AvailableSensors : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_available_sensors)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
-        window.statusBarColor = ContextCompat.getColor(this@AvailableSensors, R.color.color19)
         recycler=findViewById(R.id.recycler)
         list= ArrayList()
 

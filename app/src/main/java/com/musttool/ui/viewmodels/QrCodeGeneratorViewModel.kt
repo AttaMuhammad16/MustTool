@@ -23,16 +23,16 @@ class QrCodeGeneratorViewModel @Inject constructor(val generateQRCode: GenerateQ
 
     private var deferred: CompletableDeferred<Bitmap?>? = null
 
-    suspend fun setData(txt: String):Bitmap? {
+    suspend fun setData(context: Context,txt: String):Bitmap? {
         _data.value = txt
-        return generateQrcode(data.value.toString())
+        return generateQrcode(context,data.value.toString())
     }
 
-    private suspend fun generateQrcode(value:String): Bitmap? {
+    private suspend fun generateQrcode(context: Context,value:String): Bitmap? {
         deferred = CompletableDeferred()
         CoroutineScope(Dispatchers.IO).launch {
             val result = async {
-                generateQRCode.generateQrCode(value)
+                generateQRCode.generateQrCode(context,value)
             }
             deferred?.complete(result.await())
         }

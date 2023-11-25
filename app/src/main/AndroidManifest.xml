@@ -43,7 +43,8 @@
 
         <activity
             android:name=".ui.activities.LanguageTranslateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".ui.activities.UserLocation"
@@ -106,7 +107,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.WhatsAppActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -120,7 +122,8 @@
         </activity>
         <activity
             android:name=".ui.activities.TemperatureConverter"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -134,7 +137,8 @@
         </activity>
         <activity
             android:name=".ui.activities.GenQRActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

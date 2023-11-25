@@ -7,6 +7,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,6 +21,7 @@ import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.musttool.R
 import com.musttool.ui.viewmodels.QrCodeScannerViewModel
+import com.musttool.utils.Utils
 import com.musttool.utils.Utils.REQUEST_CAMERA_PERMISSION
 import com.musttool.utils.Utils.copyToClipboard
 import com.musttool.utils.Utils.handleCameraPermissionResult
@@ -44,13 +46,14 @@ class BarCodeScanner : AppCompatActivity(), SurfaceHolder.Callback {
     private lateinit var shareBtn: Button
     var url1: String = ""
     val qrCodeScannerViewModel: QrCodeScannerViewModel by viewModels()
+    lateinit var backArrowImg: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bar_code_scanner)
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
 
         surfaceView = findViewById(R.id.surface_view)
@@ -60,6 +63,14 @@ class BarCodeScanner : AppCompatActivity(), SurfaceHolder.Callback {
         shareBtn = findViewById(R.id.shareBtn)
         copyBtn = findViewById(R.id.copy)
         surfaceView.holder.addCallback(this)
+        backArrowImg = findViewById(R.id.backArrowImg)
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this@BarCodeScanner, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
 
         barcodeDetector = BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build()
         cameraSource = CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(1920, 1080).setAutoFocusEnabled(true).build()

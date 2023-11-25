@@ -28,6 +28,8 @@ import com.google.android.gms.vision.text.TextRecognizer
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.musttool.R
+import com.musttool.utils.Utils
 import java.io.File
 import java.io.FileOutputStream
 
@@ -54,7 +56,8 @@ class TextExtracter : AppCompatActivity() {
         clear=findViewById(com.musttool.R.id.clearText)
         pickImage=findViewById(com.musttool.R.id.pickImage)
         copyBtn=findViewById(com.musttool.R.id.copyBtn)
-        window.statusBarColor = ContextCompat.getColor(this, com.musttool.R.color.color5)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         clear.setOnClickListener {
             extractedText.text=""

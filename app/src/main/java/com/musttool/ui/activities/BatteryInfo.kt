@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.utils.Utils
 
 class BatteryInfo : AppCompatActivity() {
     lateinit var batteryPercentage:TextView
@@ -34,7 +35,9 @@ class BatteryInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battery_info)
-        window.statusBarColor = ContextCompat.getColor(this@BatteryInfo, R.color.color19)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
         batteryPercentage=findViewById(R.id.batteryPercentage)
         batteryH=findViewById(R.id.batteryHealth)
         technology=findViewById(R.id.technology)

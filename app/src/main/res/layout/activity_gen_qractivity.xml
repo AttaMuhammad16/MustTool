@@ -18,22 +18,39 @@
             android:background="@color/tool_bar_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="   Generate Qr Code"
-            app:titleTextColor="@color/white" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/backArrowImg"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="-5dp"
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Generate Qr Code"
+                android:paddingStart="@dimen/_20sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp" />
+
+
+        </androidx.appcompat.widget.Toolbar>
 
         <EditText
             android:id="@+id/edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/edt_bac"
             android:hint="Enter Text To Generate Qr Code"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/hint_edt_color"
+            android:textCursorDrawable="@drawable/edt_cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,10 +59,10 @@
         <Button
             android:id="@+id/btn"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:backgroundTint="@color/buttons_color"
             android:text="Get Qr Code"
             android:textColor="@color/white"
@@ -58,8 +75,8 @@
             android:id="@+id/share"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:backgroundTint="@color/buttons_color"
             android:text="Share"
@@ -74,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:backgroundTint="#00BCD4"
+            android:backgroundTint="#12DC3E"
             android:text="Save"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/share"
@@ -95,7 +112,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnim"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_250sdp"
+            android:layout_height="@dimen/_240sdp"
             app:layout_constraintBottom_toBottomOf="@+id/imageQR"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

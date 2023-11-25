@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.musttool.R
+import com.musttool.utils.Utils
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -49,7 +50,8 @@ class CPUInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cpuinfo)
-        window.statusBarColor = ContextCompat.getColor(this@CPUInfoActivity, R.color.color19)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
         textViewCore0=findViewById(R.id.textViewCore0)
         textViewCore1=findViewById(R.id.textViewCore1)
         textViewCore2=findViewById(R.id.textViewCore2)

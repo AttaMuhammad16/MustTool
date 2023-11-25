@@ -36,10 +36,11 @@ class MainActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         recyclerView = findViewById(R.id.recyclerView)
         apps = ArrayList()
-        window.statusBarColor = ContextCompat.getColor(this, R.color.myColor)
         var menu=findViewById<ImageButton>(R.id.menu)
 
         menu.setOnClickListener {
@@ -59,7 +60,7 @@ class MainActivity:AppCompatActivity() {
         navDrwer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.share -> {
-                   Utils.shareText(this,"MustToolApp","https://play.google.com/store/apps/details?id=com.musttool",)
+                   Utils.shareText(this,"MustToolApp","https://play.google.com/store/apps/details?id=com.musttool")
                 }
                 R.id.contact ->{
                     SweetAlertDialog(this@MainActivity, SweetAlertDialog.NORMAL_TYPE).setTitleText("atta1639916@gmail.com").show()
@@ -92,7 +93,7 @@ class MainActivity:AppCompatActivity() {
         apps.add(AppModel("Multi\nLanguages Translator", R.drawable.language_translator))
 
         recyclerView = findViewById(R.id.recyclerView)
-        layoutManger = GridLayoutManager(this, 3)
+        layoutManger = GridLayoutManager(this, 4)
         recyclerView.layoutManager = layoutManger
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter

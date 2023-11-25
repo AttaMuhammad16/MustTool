@@ -17,6 +17,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.utils.Utils
 import kotlin.math.pow
 
 class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
@@ -30,8 +31,9 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
         setContentView(R.layout.activity_gyro_scope)
         lineChart = findViewById(R.id.lineChart)
         gyroValue = findViewById(R.id.gyroValue)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
-        window.statusBarColor = ContextCompat.getColor(this, R.color.gyro)
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null) {

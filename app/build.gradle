@@ -139,6 +139,10 @@ dependencies {
     implementation 'com.itextpdf:itext7-core:7.1.15'
     implementation 'com.github.f0ris.sweetalert:library:1.6.0'
     implementation 'com.github.AtifSayings:Animatoo:1.0.1'  //Animatoo.animateZoom(context)
+
+    // Neu-morphism
+    implementation 'com.github.fornewid:neumorphism:0.2.1'
+
 }
 
 kapt {

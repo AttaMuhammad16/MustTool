@@ -1,6 +1,7 @@
 package com.musttool.utils
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ClipData
@@ -8,11 +9,21 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.drawable.RippleDrawable
 import android.net.Uri
 import android.provider.Browser
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.SurfaceView
+import android.view.View
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
@@ -24,15 +35,15 @@ import java.io.IOException
 object Utils {
     val REQUEST_CAMERA_PERMISSION = 201
 
-    fun shareText(context: Context, extraSubject:String, extraText:String){
+    fun shareText(context: Context, extraSubject: String, extraText: String) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, extraSubject)
-        shareIntent.putExtra(Intent.EXTRA_TEXT,extraText)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, extraText)
         context.startActivity(Intent.createChooser(shareIntent, "Share link via"))
     }
 
-    fun shareImage(context: Context,imgUri:Uri){
+    fun shareImage(context: Context, imgUri: Uri) {
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, imgUri)
@@ -41,7 +52,12 @@ object Utils {
         context.startActivity(Intent.createChooser(shareIntent, "Share image via"))
     }
 
-    fun exitDialog(context: Context,message:String,positiveButtonText:String,negativeButtonText:String) {
+    fun exitDialog(
+        context: Context,
+        message: String,
+        positiveButtonText: String,
+        negativeButtonText: String
+    ) {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
         builder.setMessage(message)
@@ -84,12 +100,12 @@ object Utils {
     }
 
 
-    fun myToast(context: Context,data:String,duration:Int){
+    fun myToast(context: Context, data: String, duration: Int) {
         Toast.makeText(context, data, duration).show()
     }
 
 
-    fun getRandomAnimation(randomValue: Int,context: Context) {
+    fun getRandomAnimation(randomValue: Int, context: Context) {
         when (randomValue) {
             0 -> Animatoo.animateZoom(context)
             1 -> Animatoo.animateSlideDown(context)
@@ -103,8 +119,8 @@ object Utils {
             9 -> Animatoo.animateDiagonal(context)
             10 -> Animatoo.animateSplit(context)
         }
-    }
 
+    }
 
 
     fun isValidURL(url: String): Boolean {
@@ -117,9 +133,7 @@ object Utils {
     }
 
 
-
-
-    fun openInChrome(context: Context,url: String) {
+    fun openInChrome(context: Context, url: String) {
         val chromeIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         chromeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         chromeIntent.putExtra(Browser.EXTRA_APPLICATION_ID, "com.android.chrome")
@@ -127,17 +141,20 @@ object Utils {
     }
 
 
-
-    fun copyToClipboard(context: Context,text: String) {
+    fun copyToClipboard(context: Context, text: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Copied Text", text)
         clipboard.setPrimaryClip(clip)
     }
 
 
-    fun startCameraSource(cameraSource:CameraSource,context: Context,surfaceView:SurfaceView) {
+    fun startCameraSource(cameraSource: CameraSource, context: Context, surfaceView: SurfaceView) {
         try {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return
             }
             cameraSource.start(surfaceView.holder)
@@ -146,7 +163,12 @@ object Utils {
         }
     }
 
-    fun handleCameraPermissionResult(requestCode: Int, grantResults: IntArray, onPermissionGranted: () -> Unit, onPermissionDenied: () -> Unit) {
+    fun handleCameraPermissionResult(
+        requestCode: Int,
+        grantResults: IntArray,
+        onPermissionGranted: () -> Unit,
+        onPermissionDenied: () -> Unit
+    ) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 onPermissionGranted.invoke()
@@ -156,9 +178,77 @@ object Utils {
         }
     }
 
-    fun statusBarColor(context: Context,color: Int){
+    fun statusBarColor(context: Context, color: Int) {
         (context as Activity).window.statusBarColor = ContextCompat.getColor(context, color)
     }
 
+    fun systemBottomNavigationColor(context: Context, color: Int) {
+        (context as Activity).window.navigationBarColor = ContextCompat.getColor(context, color)
+    }
+
+
+    fun preventShowingKeyboard(context: Context) {
+        (context as Activity).window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    }
+
+
+    fun navigationToMainActivity(
+        context: Context,
+        backArrowImg: ImageView,
+        onBackPressedAction: () -> Unit
+    ) {
+        val rippleDrawable = RippleDrawable(
+            ColorStateList.valueOf(context.resources.getColor(R.color.rippleColor)),
+            null,
+            null
+        )
+        backArrowImg.background = rippleDrawable
+        onBackPressedAction.invoke()
+        getRandomAnimation(0, context)
+    }
+
+
+    fun setSearchViewHintColor(context: Context, searchView: SearchView, color: Int, inputText: String? = null) {
+        val queryHint = "Search"
+        val hintColor = ContextCompat.getColor(context, color)
+        val spannable = SpannableString(queryHint)
+        spannable.setSpan(ForegroundColorSpan(hintColor), 0, queryHint.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        if (!inputText.isNullOrBlank()) {
+            searchView.setQuery(inputText, false)
+        }else{
+            searchView.queryHint = spannable
+        }
+    }
+
+    @SuppressLint("DiscouragedApi")
+    fun searchViewTextClearSearchIconsColor(searchView: SearchView, context: Context, color: Int){
+        (searchView.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText).setTextColor(ContextCompat.getColor(context, color))
+        (searchView.findViewById<View>(androidx.appcompat.R.id.search_mag_icon) as ImageView).setColorFilter(ContextCompat.getColor(context, color))
+        (searchView.findViewById<View>(androidx.appcompat.R.id.search_close_btn) as ImageView).setColorFilter(ContextCompat.getColor(context, color))
+    }
+
+
+
+    fun myColors():IntArray{
+        var itemColors = intArrayOf(
+            R.color.color1,
+            R.color.color2,
+            R.color.color4,
+            R.color.color5,
+            R.color.color6,
+            R.color.color7,
+            R.color.color8,
+            R.color.color9,
+            R.color.color10,
+            R.color.color11,
+            R.color.color12,
+            R.color.color13,
+            R.color.color14,
+            R.color.color15,
+            R.color.color16,
+            R.color.color17,
+        )
+        return itemColors
+    }
 
 }

@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.musttool.R
+import com.musttool.utils.Utils
 
 
 class WhatsAppActivity : AppCompatActivity() {
@@ -22,7 +23,8 @@ class WhatsAppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_whats_app)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.temperatureActivityColor)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         btn=findViewById(R.id.btn)
         num=findViewById(R.id.num)

@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.musttool.R
+import com.musttool.utils.Utils
 
 class FlashLightActivity : AppCompatActivity() {
     lateinit var constraint:ConstraintLayout
@@ -19,7 +20,8 @@ class FlashLightActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flash_light)
-        window.statusBarColor=ContextCompat.getColor(this@FlashLightActivity,R.color.black)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         val onButton = findViewById<Button>(R.id.flash_on_btn)
         val offButton = findViewById<Button>(R.id.flash_off_btn)

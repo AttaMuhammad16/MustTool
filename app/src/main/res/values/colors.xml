@@ -37,6 +37,16 @@
     <color name="gyro">#0694D5</color>
     <color name="tool_bar_color">#1F2943</color>
     <color name="main_app_color">#121725</color>
-    <color name="buttons_color">#0C3AB3</color>
+    <color name="buttons_color">#12DC3E</color>
+
+
+
+
+    <color name="navigation_bar_color">#1F2D55</color>
+    <color name="hint_edt_color">#A6A5A5</color>
+
+
+    <color name="rippleColor">#858383</color>
+
 
 </resources>

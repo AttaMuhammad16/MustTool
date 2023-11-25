@@ -1,9 +1,13 @@
 package com.musttool.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,38 +19,29 @@ import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.musttool.MustToolDatabase
 import com.musttool.Notes.Note
 import com.musttool.R
 import com.musttool.ui.activities.*
+import com.musttool.ui.viewmodels.NotesViewModel
+import com.musttool.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
+import javax.inject.Inject
 
-class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
+class NoteAdapter(var list: ArrayList<Note>, var context: Context,var mustToolDatabase: MustToolDatabase,val notesViewModel: NotesViewModel) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {
     private var selectedColor: Int = 0 // Initialize with a default color
-    private val itemColors = intArrayOf(
-        R.color.color1,
-        R.color.color2,
-        R.color.color4,
-        R.color.color5,
-        R.color.color6,
-        R.color.color7,
-        R.color.color8,
-        R.color.color9,
-        R.color.color10,
-        R.color.color11,
-        R.color.color12,
-        R.color.color13,
-        R.color.color14,
-        R.color.color15,
-        R.color.color16,
-        R.color.color17,
-    )
-    lateinit var mustToolDatabase: MustToolDatabase
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title=itemView.findViewById<TextView>(R.id.titleTextView)
         var description=itemView.findViewById<TextView>(R.id.descriptionTextView)
@@ -55,36 +50,40 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
         var menuImg=itemView.findViewById<ImageView>(R.id.menuImg)
         var card=itemView.findViewById<MaterialCardView>(R.id.noteItemLayoutParent)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.note_item_row, parent, false)
         return ViewHolder(v)
     }
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        mustToolDatabase=MustToolDatabase.getInstance(context)
+
         var data=list[position]
         holder.datetv.isSelected=true
-        holder.title.text=data.title
         holder.description.text=data.description
         holder.datetv.text=data.date
+        val maxLength = 8
+        if (data.title.length > maxLength) {
+            val truncatedText = data.title.substring(0, maxLength) + "..."
+            holder.title.text=truncatedText
+        } else {
+            holder.title.text=data.title
+        }
 
-        val colorIndex = position % itemColors.size
-        val backgroundColor = context.resources.getColor(itemColors[colorIndex])
+        val colorIndex = position % Utils.myColors().size
+        val backgroundColor = context.resources.getColor(Utils.myColors()[colorIndex])
         holder.ln.setBackgroundColor(backgroundColor)
 
-        var noteData:Note=Note()
+        var noteData=Note()
         holder.menuImg.setOnClickListener {
             val popupMenu = PopupMenu(context, it)
             popupMenu.menuInflater.inflate(R.menu.show_menu, popupMenu.menu)
-
             popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
                 override fun onMenuItemClick(item: MenuItem): Boolean {
                     when (item.itemId) {
                         R.id.update -> {
                             CoroutineScope(Dispatchers.IO).launch {
-                                noteData=mustToolDatabase.noteDao().getById(list[position].id)
+                                var data=notesViewModel.getNoteById(list[position].id)
+                                noteData=data
                             }
-
                             var builder= AlertDialog.Builder(context).setView(R.layout.update_note_dialog).show()
 
                             var titleEdt=builder.findViewById<EditText>(R.id.titleEdt)
@@ -96,6 +95,7 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
                             cancelBtn.setOnClickListener {
                                 builder.dismiss()
                             }
+
                             titleEdt.setText(noteData.title)
                             desEdt.setText(noteData.description)
 
@@ -109,9 +109,8 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
                                 }else if (description.isEmpty()){
                                     desEdt.error="Enter description."
                                 }else{
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        mustToolDatabase.noteDao().update(Note(id,title,description,date))
-                                    }
+                                    var data=Note(id,title,description,date)
+                                    notesViewModel.updateNote(data)
                                     builder.dismiss()
                                 }
                             }
@@ -129,7 +128,11 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
                                     var des=list[position].description
                                     var id=list[position].id
                                     var date=list[position].date
-                                    mustToolDatabase.noteDao().delete(Note(id,title,des,date))
+                                    var dataaa=Note(id,title,des,date)
+                                    notesViewModel.deleteNote(dataaa)
+                                    withContext(Dispatchers.Main){
+                                        notifyItemChanged(position)
+                                    }
                                 }
                                 dialog.dismiss()
                             }
@@ -153,7 +156,18 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
             intent.putExtra("des",data.description)
             intent.putExtra("date",data.date)
             intent.putExtra("color",selectedColor)
+            intent.putExtra("index",colorIndex)
             context.startActivity(intent)
+            Utils.getRandomAnimation(0,context)
+        }
+
+        holder.itemView.setOnLongClickListener {
+            val textToCopy = list[position].date+"\n"+list[position].title+"\n"+list[position].description
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Copied Text", textToCopy)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+            true
         }
 
     }
@@ -161,6 +175,5 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context) : RecyclerVie
     override fun getItemCount(): Int {
         return list.size
     }
-
 
 }

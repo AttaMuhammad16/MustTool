@@ -1,23 +1,27 @@
-package com.musttool.data.QrCodeGenerate.qrcoderepoimpl
+package com.musttool.data.QrCodeGenerate.qrcodegeneraterrepo
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.content.ContextCompat
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
-import com.musttool.data.QrCodeGenerate.qrcodegeneraterrepo.GenerateQRCodeRepo
+import com.musttool.R
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class QrCodeGeneratorImplRepo @Inject constructor():GenerateQRCodeRepo {
-    override suspend fun generateQrCode(text: String): Bitmap? {
+    override suspend fun generateQrCode(context: Context,text: String): Bitmap? {
         val bitMatrix: BitMatrix
         try {
-            bitMatrix = MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, 300, 300, null)
+            bitMatrix = MultiFormatWriter().encode("Install This App\nhttps://play.google.com/store/apps/details?id=com.musttool\nYour Data:\n$text", BarcodeFormat.QR_CODE, 300, 300, null)
         } catch (IllegalArgumentException: WriterException) {
             return null
         }

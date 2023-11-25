@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.musttool.R
+import com.musttool.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,8 +67,8 @@ class DeviceInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_device_info)
-        window.statusBarColor = ContextCompat.getColor(this@DeviceInfoActivity, R.color.color19)
-
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
         manufacturer=findViewById(R.id.manufacturer)
         deviceNum=findViewById(R.id.deviceNum)
         version=findViewById(R.id.version)

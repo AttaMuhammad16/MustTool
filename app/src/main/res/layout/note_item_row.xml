@@ -26,6 +26,8 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Title"
                 android:textColor="@color/black"
                 android:textSize="18sp"

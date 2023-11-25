@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.an.deviceinfo.location.LocationInfo
 import com.musttool.R
+import com.musttool.utils.Utils
 
 class UserLocation : AppCompatActivity() {
     val LOCATION_PERMISSION_REQUEST_CODE = 123
@@ -21,7 +22,8 @@ class UserLocation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_location)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.color19)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
         cityTv=findViewById(R.id.cityTv)
         latitudeTv=findViewById(R.id.latitudeTv)

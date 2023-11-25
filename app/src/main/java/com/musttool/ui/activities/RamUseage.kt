@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.utils.Utils
 import com.skydoves.progressview.OnProgressChangeListener
 import com.skydoves.progressview.OnProgressClickListener
 import com.skydoves.progressview.ProgressView
@@ -44,7 +45,8 @@ class RamUseage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ram_useage)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.light)
+        Utils.statusBarColor(this, R.color.myColor)
+        Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
         ramChart = findViewById(R.id.ramChart)
         progressView = findViewById(R.id.progressView)
         progress2 = findViewById(R.id.progress2)
