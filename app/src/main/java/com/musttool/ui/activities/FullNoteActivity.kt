@@ -2,9 +2,12 @@ package com.musttool.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -21,6 +24,7 @@ class FullNoteActivity : AppCompatActivity() {
     lateinit var des_tv:TextView
     lateinit var constraint:ConstraintLayout
     lateinit var scroll:ScrollView
+    lateinit var copyContent:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_note)
@@ -31,6 +35,7 @@ class FullNoteActivity : AppCompatActivity() {
         des_tv=findViewById(R.id.des_tv)
         constraint=findViewById(R.id.constraint)
         scroll=findViewById(R.id.scroll)
+        copyContent=findViewById(R.id.copyContent)
         var toolBar=findViewById<Toolbar>(R.id.toolBar)
         var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
 
@@ -58,5 +63,26 @@ class FullNoteActivity : AppCompatActivity() {
             }
         }
 
+        copyContent.setOnClickListener {
+            Utils.rippleEffect(this,copyContent)
+            var data=date+"\n"+title+"\n"+des
+            Utils.copyContentText(data,this)
+            Utils.myToast(this,"Text copied to clipboard", Toast.LENGTH_SHORT)
+
+            val zoomInAnimation = ScaleAnimation(1f, 1.2f, 1f, 1.2f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+            zoomInAnimation.duration = 300
+            zoomInAnimation.fillAfter = true
+            zoomInAnimation.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
+                override fun onAnimationEnd(animation: Animation) {
+                    val zoomOutAnimation = ScaleAnimation(1.2f, 1f, 1.2f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+                    zoomOutAnimation.duration = 300
+                    zoomOutAnimation.fillAfter = true
+                    copyContent.startAnimation(zoomOutAnimation)
+                }
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+            copyContent.startAnimation(zoomInAnimation)
+        }
     }
 }

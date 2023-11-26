@@ -55,6 +55,8 @@ class NotesApp : AppCompatActivity() {
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
         addBtn = findViewById(R.id.addBtn)
 
+        Utils.objectAnimater(addBtn) // rotating  animation.
+
         notesRecycler = findViewById(R.id.notesRecycler)
         searchView = findViewById(R.id.searchView)
         backArrowImg = findViewById(R.id.backArrowImg)
@@ -72,6 +74,7 @@ class NotesApp : AppCompatActivity() {
         addBtn.setOnClickListener {
             showDialog()
         }
+
 
         lifecycleScope.launch { // getting data from data base.
             notesViewModel.apply {
@@ -156,6 +159,5 @@ class NotesApp : AppCompatActivity() {
                 preventShowingKeyboard(this)
             }
         }
-
     }
 }

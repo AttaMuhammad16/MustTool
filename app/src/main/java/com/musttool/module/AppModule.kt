@@ -44,7 +44,6 @@ object AppModule {
         return database.noteDao()
     }
 
-
 }
 object password { // lock on data base.
     val openHelperFactory = SupportFactory(SQLiteDatabase.getBytes("!@@##$%%QWEERRTT/.,><~_++".toCharArray()))

@@ -1,5 +1,6 @@
 package com.musttool.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
@@ -8,8 +9,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.musttool.R
 import com.musttool.utils.Utils
@@ -20,6 +24,7 @@ class WhatsAppActivity : AppCompatActivity() {
     lateinit var num:EditText
     lateinit var mes:EditText
     var message:String=""
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_whats_app)
@@ -30,39 +35,36 @@ class WhatsAppActivity : AppCompatActivity() {
         num=findViewById(R.id.num)
         mes=findViewById(R.id.mes)
         num.requestFocus()
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        val shakeAnimation = AnimationUtils.loadAnimation(this, R.drawable.shake_animation)
 
-
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        if (clipboard.hasPrimaryClip() && clipboard.primaryClipDescription!!.hasMimeType(MIMETYPE_TEXT_PLAIN)) {
-            val clipData = clipboard.primaryClip
-            val itemCount = clipData?.itemCount ?: 0
-            if (itemCount > 0) {
-                val item = clipData?.getItemAt(0)
-                val text = item?.text?.toString()
-                Log.i("TAG", text!!)
-                btn.text = text
-                if (!text.isNullOrEmpty()) {
-                    mes.setText(text)
-                    Log.i("TAG", "onCreate: $text")
-                } else {
-                    text.let {
-                        if (it != null) {
-                            if (it.length in 11..13) {
-                                num.setText(it)
-                                Log.i("TAG", "onCreate: $text")
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         btn.setOnClickListener {
             val phoneNumber = num.text.toString()
             message = mes.text.toString()
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.encode(message)}")
-            startActivity(intent)
+            if (phoneNumber.isEmpty()){
+                num.startAnimation(shakeAnimation)
+                Utils.myToast(this,"Please Enter Your Phone Number", Toast.LENGTH_SHORT)
+                num.error="Something Wrong"
+            }else if (message.isEmpty()){
+                mes.startAnimation(shakeAnimation)
+                Utils.myToast(this,"Please Enter Your Message", Toast.LENGTH_SHORT)
+                mes.error="Something Wrong"
+            }else{
+                Utils.sendMessageToWhatsApp(this,phoneNumber, message)
+            }
         }
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

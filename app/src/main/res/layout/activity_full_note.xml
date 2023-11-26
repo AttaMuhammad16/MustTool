@@ -11,6 +11,7 @@
         android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
@@ -68,11 +69,11 @@
             android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:layout_marginStart="@dimen/_17sdp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="@dimen/_17sdp"
-            android:background="@drawable/edt_bac"
-            android:padding="@dimen/_4sdp"
+            android:background="@drawable/title_des_bac"
+            android:padding="@dimen/_6sdp"
             android:text="Title  "
             android:textColor="@color/black"
             android:textSize="@dimen/_18sdp"
@@ -109,11 +110,11 @@
             android:id="@+id/textView5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="@dimen/_17sdp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/_17sdp"
-            android:background="@drawable/edt_bac"
-            android:padding="@dimen/_4sdp"
+            android:background="@drawable/title_des_bac"
+            android:padding="@dimen/_6sdp"
             android:text="Description  "
             android:textColor="@color/black"
             android:textSize="@dimen/_18sdp"
@@ -131,16 +132,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:neumorph_shapeType="flat">
-
-            <TextView
-                android:id="@+id/des_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:gravity="start"
-                android:text="c"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp" />
+                android:orientation="vertical"
+                android:layout_margin="@dimen/_10sdp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/des_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:text="c"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_20sdp" />
+                <ImageView
+                    android:id="@+id/copyContent"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/baseline_content_copy_24"    />
+            </LinearLayout>
         </soup.neumorphism.NeumorphCardView>
 
         <View
@@ -148,10 +160,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"
-            app:layout_constraintTop_toBottomOf="@+id/neuoCard3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/neuoCard3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

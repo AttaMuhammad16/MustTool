@@ -162,11 +162,9 @@ class NoteAdapter(var list: ArrayList<Note>, var context: Context,var mustToolDa
         }
 
         holder.itemView.setOnLongClickListener {
-            val textToCopy = list[position].date+"\n"+list[position].title+"\n"+list[position].description
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Copied Text", textToCopy)
-            clipboard.setPrimaryClip(clip)
-            Toast.makeText(context, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+            val dataText = list[position].date+"\n"+list[position].title+"\n"+list[position].description
+            Utils.copyContentText(dataText, context)
+            Utils.myToast(context,"Text copied to clipboard",Toast.LENGTH_SHORT)
             true
         }
 

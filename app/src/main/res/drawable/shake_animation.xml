@@ -1,0 +1,38 @@
+<!-- shake_animation.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:fromXDelta="0"
+        android:toXDelta="5"
+        android:duration="40"
+        android:interpolator="@android:anim/linear_interpolator" />
+    <translate
+        android:fromXDelta="5"
+        android:toXDelta="-5"
+        android:duration="40"
+        android:startOffset="100"
+        android:interpolator="@android:anim/linear_interpolator" />
+    <translate
+        android:fromXDelta="-5"
+        android:toXDelta="5"
+        android:duration="40"
+        android:startOffset="200"
+        android:interpolator="@android:anim/linear_interpolator" />
+    <translate
+        android:fromXDelta="5"
+        android:toXDelta="-5"
+        android:duration="40"
+        android:startOffset="300"
+        android:interpolator="@android:anim/linear_interpolator" />
+    <translate
+        android:fromXDelta="-5"
+        android:toXDelta="5"
+        android:duration="40"
+        android:startOffset="400"
+        android:interpolator="@android:anim/linear_interpolator" />
+    <translate
+        android:fromXDelta="5"
+        android:toXDelta="0"
+        android:duration="40"
+        android:startOffset="500"
+        android:interpolator="@android:anim/linear_interpolator" />
+</set>

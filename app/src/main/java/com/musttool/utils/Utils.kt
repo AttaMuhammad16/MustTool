@@ -1,6 +1,7 @@
 package com.musttool.utils
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -20,14 +21,17 @@ import android.text.style.ForegroundColorSpan
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.vision.CameraSource
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.musttool.R
 import com.musttool.ui.activities.*
 import java.io.IOException
@@ -249,6 +253,33 @@ object Utils {
             R.color.color17,
         )
         return itemColors
+    }
+
+
+    fun copyContentText(data:String,context: Context){
+        val text = data
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Copied Text", text)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    fun rippleEffect(context: Context,imageView: ImageView){
+        val rippleDrawable = RippleDrawable(ColorStateList.valueOf(context.resources.getColor(R.color.rippleColor)), null, null)
+        imageView.background = rippleDrawable
+    }
+
+    fun objectAnimater(fab:FloatingActionButton){
+        val rotateAnimator = ObjectAnimator.ofFloat(fab, "rotation", 0f, 360f)
+        rotateAnimator.duration = 4000
+        rotateAnimator.interpolator = AccelerateDecelerateInterpolator()
+        rotateAnimator.start()
+    }
+
+
+    fun sendMessageToWhatsApp(context: Context,phoneNumber:String,message: String){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("https://wa.me/$phoneNumber/?text=${Uri.encode(message)}")
+        context.startActivity(intent)
     }
 
 }

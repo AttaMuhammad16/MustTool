@@ -28,6 +28,14 @@
         <item name="android:textColorHint">@android:color/darker_gray</item>
     </style>
 
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/edt_border_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+
 
 
 </resources>
