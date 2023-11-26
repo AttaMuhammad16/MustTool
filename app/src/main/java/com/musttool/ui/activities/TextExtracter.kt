@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.text.TextRecognizer
 import com.google.mlkit.vision.common.InputImage
@@ -44,20 +46,31 @@ class TextExtracter : AppCompatActivity() {
     lateinit var copyBtn:Button
     var recognizer=TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     private var bitmap:Bitmap?=null
+    lateinit var lottieAnim:LottieAnimationView
+    lateinit var scanningBar:LottieAnimationView
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.musttool.R.layout.activity_text_extracter)
 
-        imageView=findViewById(com.musttool.R.id.imageView)
-        extractedText=findViewById(com.musttool.R.id.extractedText)
-        captureBtn=findViewById(com.musttool.R.id.captureBtn)
-        extractBtn=findViewById(com.musttool.R.id.extractBtn)
-        clear=findViewById(com.musttool.R.id.clearText)
-        pickImage=findViewById(com.musttool.R.id.pickImage)
-        copyBtn=findViewById(com.musttool.R.id.copyBtn)
+        imageView=findViewById(R.id.imageView)
+        extractedText=findViewById(R.id.extractedText)
+        captureBtn=findViewById(R.id.captureBtn)
+        extractBtn=findViewById(R.id.extractBtn)
+        clear=findViewById(R.id.clearText)
+        pickImage=findViewById(R.id.pickImage)
+        copyBtn=findViewById(R.id.copyBtn)
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        lottieAnim = findViewById(R.id.lottieAnim)
+        scanningBar = findViewById(R.id.scanningBar)
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         clear.setOnClickListener {
             extractedText.text=""
@@ -69,18 +82,21 @@ class TextExtracter : AppCompatActivity() {
             }else{
                 takeImage()
                 extractedText.text=""
+                lottieAnim.visibility= View.GONE
             }
         }
 
         extractBtn.setOnClickListener {
             processImage()
         }
+
         pickImage.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA), 0)
             }else{
                 pickFromGallery()
                 extractedText.text=""
+                lottieAnim.visibility= View.GONE
             }
         }
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -92,7 +108,6 @@ class TextExtracter : AppCompatActivity() {
             val clip = ClipData.newPlainText("Copied Text", textToCopy)
             clipboard.setPrimaryClip(clip)
             Toast.makeText(this, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
-
         }
     }
 
@@ -104,14 +119,17 @@ class TextExtracter : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun processImage() { // get text from image
         if (bitmap!=null){
+            scanningBar.visibility=View.VISIBLE
             var image=bitmap?.let {
                 InputImage.fromBitmap(it,0)
             }
             image?.let {
                 recognizer.process(it).addOnSuccessListener {
                     extractedText.text=it.text
+                    scanningBar.visibility=View.GONE
                 }.addOnFailureListener {
                     Toast.makeText(this@TextExtracter, "Try Again Please.", Toast.LENGTH_SHORT).show()
+                    scanningBar.visibility=View.GONE
                 }
             }
         }else{
