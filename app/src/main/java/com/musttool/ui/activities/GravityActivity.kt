@@ -8,8 +8,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -17,17 +19,19 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.ui.viewmodels.ChartViewViewModel
 import com.musttool.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.pow
 
-
+@AndroidEntryPoint
 class GravityActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var gravitySensor: Sensor
     private lateinit var lineChart: LineChart
     private lateinit var gravityValue: TextView
     private val entries = ArrayList<Entry>()
-
+    val chartViewViewModel:ChartViewViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gravity)
@@ -36,6 +40,13 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
 
         lineChart = findViewById(R.id.lineChart)
         gravityValue = findViewById(R.id.gravityValue)
+
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -46,6 +57,9 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
             Toast.makeText(this@GravityActivity, "Gravity Sensor not available.", Toast.LENGTH_LONG).show()
         }
 
+        chartViewViewModel.data.observe(this){
+            gravityValue.text=it
+        }
     }
 
     override fun onDestroy() {
@@ -60,45 +74,13 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
             val gravityZ = event.values[2]
 
             val gravityMagnitude = Math.sqrt(gravityX.toDouble().pow(2.0) + gravityY.toDouble().pow(2.0) + gravityZ.toDouble().pow(2.0)).toFloat()
-
             entries.add(Entry(entries.size.toFloat(), gravityMagnitude))
-
-            updateLineChart(gravityMagnitude.toString())
-            gravityValue.text=gravityMagnitude.toString()
+            chartViewViewModel.updateLineChart(gravityMagnitude.toString(),lineChart,entries,"gravity","gravity",Color.GREEN)
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // No need to handle accuracy changes for step counter
-    }
-
-    private fun updateLineChart(gravityMagnitude: String) {
-        val dataSet = LineDataSet(entries, "$gravityMagnitude m/s²")
-        dataSet.color = Color.MAGENTA
-        dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(false)
-        dataSet.valueTextSize = 12f
-
-        val data = LineData(dataSet)
-        lineChart.data = data
-        lineChart.invalidate()
-
-        val description = Description()
-        description.text = "Gravity"
-        lineChart.description = description
-
-        // Customize appearance
-        lineChart.axisLeft.textColor = Color.WHITE // Y-axis label color
-        lineChart.axisRight.textColor = Color.WHITE // Y-axis label color
-        lineChart.xAxis.textColor = Color.WHITE // X-axis label color
-        lineChart.legend.textColor = Color.WHITE // Legend color
-        lineChart.description.textColor = Color.WHITE // Description color
-
-        // Customize grid lines
-        lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
-
     }
 
 }

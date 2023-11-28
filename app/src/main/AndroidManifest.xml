@@ -68,6 +68,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.CPUInfoActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DeviceInfoActivity"
@@ -80,27 +81,34 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.CompassActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.GyroScopeActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.LightMeasureActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.GravityActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.Acceleration"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.MagneticFiledActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.CropeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.TextExtracter"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ui.activities.FullNoteActivity"

@@ -8,8 +8,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -17,15 +19,19 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.ui.viewmodels.ChartViewViewModel
 import com.musttool.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.pow
 
+@AndroidEntryPoint
 class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var magnetSensor: Sensor
     private lateinit var lineChart: LineChart
     private lateinit var magneticFieldValue: TextView
     private val entries = ArrayList<Entry>()
+    val chartViewViewModel:ChartViewViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +40,14 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         magneticFieldValue = findViewById(R.id.magneticFieldValue)
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -41,8 +55,14 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
             magnetSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
             sensorManager.registerListener(this, magnetSensor, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            Toast.makeText(this@MagneticFiledActivity, "Magnet Sensor not available.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@MagneticFiledActivity, "Magnetic Sensor not available.", Toast.LENGTH_LONG).show()
         }
+
+        chartViewViewModel.data.observe(this){
+            magneticFieldValue.text=it
+        }
+
+
     }
 
     override fun onDestroy() {
@@ -52,52 +72,13 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            val magnitude = Math.sqrt(
-                event.values[0].toDouble().pow(2.0) +
-                        event.values[1].toDouble().pow(2.0) +
-                        event.values[2].toDouble().pow(2.0)
-            ).toFloat()
-
-            // Add new data entry to the chart
+            val magnitude = Math.sqrt(event.values[0].toDouble().pow(2.0) + event.values[1].toDouble().pow(2.0) + event.values[2].toDouble().pow(2.0)).toFloat()
             entries.add(Entry(entries.size.toFloat(), magnitude))
-
-            // Update the line chart
-            updateLineChart(magnitude.toString())
-            magneticFieldValue.text=magnitude.toString()
+            chartViewViewModel.updateLineChart(magnitude.toString(),lineChart,entries,"Magnetic Field","Magnetic Field chart",Color.RED)
         }
     }
-
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
 
-
-    private fun updateLineChart(magnitude:String) {
-        val dataSet = LineDataSet(entries, "$magnitude Magnetic Field (μT)") //
-        dataSet.color = Color.RED // color
-        dataSet.setDrawCircles(false) // color
-        dataSet.setDrawValues(false)
-        dataSet.valueTextSize = 12f
-
-        val data = LineData(dataSet)
-        lineChart.data = data
-        lineChart.invalidate()
-
-        val description = Description()
-        description.text = "Magnetic Field "
-        lineChart.description = description
-
-        // Customize appearance
-        lineChart.axisLeft.textColor = Color.WHITE // Y-axis label color
-        lineChart.axisRight.textColor = Color.WHITE // Y-axis label color
-        lineChart.xAxis.textColor = Color.WHITE // X-axis label color
-        lineChart.legend.textColor = Color.WHITE // Legend color
-        lineChart.description.textColor = Color.WHITE // Description color
-
-        // Customize grid lines
-        lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
-
-    }
 }

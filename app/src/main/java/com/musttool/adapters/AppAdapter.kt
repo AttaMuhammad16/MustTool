@@ -27,11 +27,9 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
         Glide.with(context).load(list[position].img).into(holder.itemImage)
 
         holder.itemView.setOnClickListener {
-
             val intent = Utils.getIntent(context,position)
             intent?.putExtra("book", list[position].title)
             holder.itemView.context.startActivity(intent)
-
             var randomValue = kotlin.random.Random.nextInt(0..10)
             Utils.getRandomAnimation(randomValue,context)
         }
@@ -41,4 +39,5 @@ class AppAdapter(var list: ArrayList<AppModel>, var context: Context) : Recycler
         var itemImage: ImageView = itemView.findViewById(R.id.image)
         var itemTitle: TextView = itemView.findViewById(R.id.tv)
     }
+
 }

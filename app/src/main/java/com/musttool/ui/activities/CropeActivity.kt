@@ -54,9 +54,7 @@ class CropeActivity : AppCompatActivity() {
     }
 
     private fun generateRandomFileName(): String {
-        val randomFileName = StringBuilder(UUID.randomUUID().toString())
-            .append(".jpg")
-            .toString()
+        val randomFileName = StringBuilder(UUID.randomUUID().toString()).append(".jpg").toString()
         return randomFileName
     }
 }

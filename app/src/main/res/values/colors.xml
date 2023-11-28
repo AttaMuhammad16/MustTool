@@ -46,7 +46,7 @@
     <color name="edt_border_color">#09D311</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/edt_border_color</color>
-
+    <color name="chart_background_color">#192340</color>
 
 
 </resources>

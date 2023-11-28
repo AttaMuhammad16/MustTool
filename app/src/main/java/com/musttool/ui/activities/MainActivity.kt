@@ -69,6 +69,7 @@ class MainActivity:AppCompatActivity() {
             true
         }
 
+
         apps.add(AppModel("QR Generator", R.drawable.qr))
         apps.add(AppModel("Bar code & Qr Code\n Scanner", R.drawable.qrc))
         apps.add(AppModel("Temperature Converter", R.drawable.converter))
@@ -76,7 +77,7 @@ class MainActivity:AppCompatActivity() {
         apps.add(AppModel("Message Sender", R.drawable.wht))
         apps.add(AppModel("Text Extractor", R.drawable.text_extractor))
         apps.add(AppModel("Magnetic Filed Detector", R.drawable.magnet))
-        apps.add(AppModel("Acceleration Meter", R.drawable.accelerartion))
+        apps.add(AppModel("Acceleration Meter", R.drawable.acceleration))
         apps.add(AppModel("Gravity Meter", R.drawable.gravity))
         apps.add(AppModel("Light Measurement/ Lux meter", R.drawable.light))
         apps.add(AppModel("Gyroscope Testing", R.drawable.gyroscope))

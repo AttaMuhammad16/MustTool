@@ -151,6 +151,9 @@ dependencies {
 
     // Neu-morphism
     implementation 'com.github.fornewid:neumorphism:0.2.1'
+    
+    // permission handler
+    implementation 'rebus:permission-utils:1.0.3'
 
 
 }

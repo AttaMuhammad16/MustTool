@@ -1,6 +1,6 @@
 package com.musttool.module
 
-import android.app.Application
+import android.app.Activity
 import android.content.Context
 import androidx.room.Room
 import com.musttool.MustToolDatabase
@@ -9,10 +9,15 @@ import com.musttool.data.NotesApp.NotesAppRepo
 import com.musttool.data.NotesApp.NotesAppRepoImpl
 import com.musttool.data.QrCodeGenerate.qrcodegeneraterrepo.GenerateQRCodeRepo
 import com.musttool.data.QrCodeGenerate.qrcodegeneraterrepo.QrCodeGeneratorImplRepo
+import com.musttool.data.TextExtractor.TextExtractorRepo.TextExtractorRepo
+import com.musttool.data.TextExtractor.TextExtractorRepo.TextExtractorRepoImpl
 import com.musttool.module.password.openHelperFactory
+import com.musttool.utils.CameraPermissionHandler.CameraPermissionHandler
+import com.musttool.utils.CameraPermissionHandler.InterCameraPermissionHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import net.sqlcipher.database.SQLiteDatabase
@@ -42,6 +47,18 @@ object AppModule {
     @Singleton
     fun provideNoteDao(database: MustToolDatabase): NotesDAO {
         return database.noteDao()
+    }
+
+    @Provides
+    @Singleton
+    fun getCameraPermissionHandlerObject(@ActivityContext context: Activity): InterCameraPermissionHandler {
+        return CameraPermissionHandler(context)
+    }
+
+    @Provides
+    @Singleton
+    fun getTextExtractorRepoObj():TextExtractorRepo{
+        return TextExtractorRepoImpl()
     }
 
 }
