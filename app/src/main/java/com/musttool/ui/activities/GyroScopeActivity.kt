@@ -8,8 +8,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -17,15 +19,21 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.musttool.R
+import com.musttool.ui.viewmodels.ChartViewViewModel
 import com.musttool.utils.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.pow
 
+
+@AndroidEntryPoint
 class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var gyroSensor: Sensor
     private lateinit var lineChart: LineChart
     private lateinit var gyroValue: TextView
     private val entries = ArrayList<Entry>()
+    val chartViewViewModel:ChartViewViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gyro_scope)
@@ -34,16 +42,29 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE) != null) {
-
             gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)!!
             sensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
         } else {
             Toast.makeText(this@GyroScopeActivity, "Gyroscope Sensor not available.", Toast.LENGTH_LONG).show()
         }
+
+        chartViewViewModel.data.observe(this){
+            if (it!=null){
+                gyroValue.text=it
+            }
+        }
+
+
     }
 
     override fun onDestroy() {
@@ -57,52 +78,16 @@ class GyroScopeActivity : AppCompatActivity(), SensorEventListener {
             val gyroY = event.values[1]
             val gyroZ = event.values[2]
 
-            // Calculate the magnitude of the gyroscope vector
-            val gyroMagnitude = Math.sqrt(
-                gyroX.toDouble().pow(2.0) +
-                        gyroY.toDouble().pow(2.0) +
-                        gyroZ.toDouble().pow(2.0)
-            ).toFloat()
+            val gyroMagnitude = Math.sqrt(gyroX.toDouble().pow(2.0) + gyroY.toDouble().pow(2.0) + gyroZ.toDouble().pow(2.0)).toFloat()
 
-            // Add new data entry to the chart
             entries.add(Entry(entries.size.toFloat(), gyroMagnitude))
+            chartViewViewModel.updateLineChart(gyroMagnitude.toString(),lineChart,entries,"GyroScope","GyroScope",Color.RED)
 
-            // Update the line chart
-            updateLineChart(gyroMagnitude.toString())
-            gyroValue.text=gyroMagnitude.toString()
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // No need to handle accuracy changes for gyroscope
-    }
-
-    private fun updateLineChart(gyroMagnitude: String) {
-        val dataSet = LineDataSet(entries, "$gyroMagnitude rad/s")
-        dataSet.color = Color.GREEN
-        dataSet.setDrawCircles(false)
-        dataSet.setDrawValues(false)
-        dataSet.valueTextSize = 12f
-
-        val data = LineData(dataSet)
-        lineChart.data = data
-        lineChart.invalidate()
-
-        val description = Description()
-        description.text = "Gyroscope Data"
-        lineChart.description = description
-
-        // Customize appearance
-        lineChart.axisLeft.textColor = Color.WHITE // Y-axis label color
-        lineChart.axisRight.textColor = Color.WHITE // Y-axis label color
-        lineChart.xAxis.textColor = Color.WHITE // X-axis label color
-        lineChart.legend.textColor = Color.WHITE // Legend color
-        lineChart.description.textColor = Color.WHITE // Description color
-
-        // Customize grid lines
-        lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
-        lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
     }
 
 }

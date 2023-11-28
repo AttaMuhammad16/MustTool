@@ -57,7 +57,9 @@ class Acceleration : AppCompatActivity(), SensorEventListener {
         }
 
         chartViewViewModel.data.observe(this){
-            accelerationValue.text = it.toString()
+            if (it!=null){
+                accelerationValue.text = it.toString()
+            }
         }
 
     }

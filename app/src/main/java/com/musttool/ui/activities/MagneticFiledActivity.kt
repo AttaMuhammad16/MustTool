@@ -59,7 +59,9 @@ class MagneticFiledActivity : AppCompatActivity(), SensorEventListener {
         }
 
         chartViewViewModel.data.observe(this){
-            magneticFieldValue.text=it
+            if (it!=null){
+                magneticFieldValue.text=it
+            }
         }
 
 

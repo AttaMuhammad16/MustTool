@@ -23,6 +23,7 @@ import com.musttool.ui.viewmodels.ChartViewViewModel
 import com.musttool.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.pow
+import kotlin.math.sqrt
 
 @AndroidEntryPoint
 class GravityActivity : AppCompatActivity(), SensorEventListener {
@@ -58,7 +59,9 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
         }
 
         chartViewViewModel.data.observe(this){
-            gravityValue.text=it
+            if (it!=null){
+                gravityValue.text=it
+            }
         }
     }
 
@@ -73,7 +76,7 @@ class GravityActivity : AppCompatActivity(), SensorEventListener {
             val gravityY = event.values[1]
             val gravityZ = event.values[2]
 
-            val gravityMagnitude = Math.sqrt(gravityX.toDouble().pow(2.0) + gravityY.toDouble().pow(2.0) + gravityZ.toDouble().pow(2.0)).toFloat()
+            val gravityMagnitude = sqrt(gravityX.toDouble().pow(2.0) + gravityY.toDouble().pow(2.0) + gravityZ.toDouble().pow(2.0)).toFloat()
             entries.add(Entry(entries.size.toFloat(), gravityMagnitude))
             chartViewViewModel.updateLineChart(gravityMagnitude.toString(),lineChart,entries,"gravity","gravity",Color.GREEN)
         }

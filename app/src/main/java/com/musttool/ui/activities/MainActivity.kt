@@ -69,7 +69,6 @@ class MainActivity:AppCompatActivity() {
             true
         }
 
-
         apps.add(AppModel("QR Generator", R.drawable.qr))
         apps.add(AppModel("Bar code & Qr Code\n Scanner", R.drawable.qrc))
         apps.add(AppModel("Temperature Converter", R.drawable.converter))
@@ -79,7 +78,7 @@ class MainActivity:AppCompatActivity() {
         apps.add(AppModel("Magnetic Filed Detector", R.drawable.magnet))
         apps.add(AppModel("Acceleration Meter", R.drawable.acceleration))
         apps.add(AppModel("Gravity Meter", R.drawable.gravity))
-        apps.add(AppModel("Light Measurement/ Lux meter", R.drawable.light))
+        apps.add(AppModel("Light Measurement/ Lux meter", R.drawable.lightbulb))
         apps.add(AppModel("Gyroscope Testing", R.drawable.gyroscope))
         apps.add(AppModel("Compass(direction)", R.drawable.navigation))
         apps.add(AppModel("Calculator", R.drawable.calculator))
@@ -99,6 +98,7 @@ class MainActivity:AppCompatActivity() {
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
 
+
     }
 
     override fun onBackPressed() {
@@ -108,5 +108,6 @@ class MainActivity:AppCompatActivity() {
             Utils.exitDialog(this,"Do you want to Exit?","Yes","No")
         }
     }
+
 
 }
