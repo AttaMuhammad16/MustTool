@@ -1,11 +1,13 @@
 package com.musttool.ui.activities
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -28,6 +30,13 @@ class CalculatoreActivity : AppCompatActivity() {
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
 
         val buttonClickListener = View.OnClickListener { v ->
             val clickedButton = v as Button
@@ -39,6 +48,7 @@ class CalculatoreActivity : AppCompatActivity() {
                 else -> appendInput(buttonText)
             }
         }
+
 
         button_delete.setOnClickListener{
             deleteInputCharacter()
@@ -75,11 +85,15 @@ class CalculatoreActivity : AppCompatActivity() {
         val expression = inputTextView.text.toString()
         try {
             val result = evaluate(expression)
+            outputTextView.setTextColor(Color.WHITE)
             outputTextView.text = result.toString()
         } catch (e: Exception) {
+            outputTextView.setTextColor(Color.RED)
             outputTextView.text = "Error"
         }
     }
+
+
 
     private fun evaluate(expression: String): Double {
         val operators = setOf("+", "-", "×", "÷")
@@ -97,9 +111,7 @@ class CalculatoreActivity : AppCompatActivity() {
                     tokens.add(currentToken)
                     currentToken = ""
                 }
-
                 if (i == 0 || expression[i - 1].toString() in operators) {
-                    // Treat the current operator as a negative sign for a number
                     currentToken += char
                 } else {
                     tokens.add(char.toString())
@@ -123,12 +135,10 @@ class CalculatoreActivity : AppCompatActivity() {
             tokens.add(currentToken)
         }
 
-        // Check if the expression starts with a valid token
         if (tokens.isNotEmpty()) {
             val firstToken = tokens[0]
             validExpression = firstToken.toDoubleOrNull() != null || firstToken == "("
         }
-
         if (!validExpression || bracketStack.isNotEmpty()) {
             throw IllegalArgumentException("Invalid input")
         }
@@ -158,11 +168,6 @@ class CalculatoreActivity : AppCompatActivity() {
         return accumulator
     }
 
-
-
-
-
-
     private fun deleteInputCharacter() {
         val currentInput = inputTextView.text.toString()
         if (currentInput.isNotEmpty()) {
@@ -171,13 +176,8 @@ class CalculatoreActivity : AppCompatActivity() {
         }
     }
 
-
     private fun vibratePhone() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(50)
-        }
+        Utils.vibratePhone(vibrator,50)
     }
+
 }

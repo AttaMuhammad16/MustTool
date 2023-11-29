@@ -19,6 +19,8 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.net.Uri
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.Browser
 import android.provider.MediaStore
 import android.text.Spannable
@@ -321,6 +323,16 @@ object Utils {
         val intent = Intent(context, CropeActivity::class.java)
         intent.putExtra(key, contentUri.toString())
         context.startActivityForResult(intent, requestCode)
+    }
+
+
+    inline fun vibratePhone(vibrator:Vibrator,milliseconds:Long){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(milliseconds)
+        }
     }
 
 }

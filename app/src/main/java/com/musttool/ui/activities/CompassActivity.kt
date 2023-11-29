@@ -1,5 +1,6 @@
 package com.musttool.ui.activities
 
+import android.Manifest
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -13,6 +14,7 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.musttool.R
 import com.musttool.utils.Utils
@@ -22,7 +24,6 @@ class CompassActivity : AppCompatActivity() {
 
     private var currentNeedleDegree = 0f
     lateinit var tvDirection: TextView
-    lateinit var tvLocation: TextView
     lateinit var ivCompass: ImageView
     lateinit var ivNeedle: ImageView
     private var currentCompassDegree = 0f
@@ -34,9 +35,16 @@ class CompassActivity : AppCompatActivity() {
         tvDirection=findViewById(R.id.tvDirection)
         ivCompass=findViewById(R.id.ivCompass)
         ivNeedle=findViewById(R.id.ivNeedle)
-        tvLocation=findViewById(R.id.tvLocation)
+
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -47,37 +55,21 @@ class CompassActivity : AppCompatActivity() {
         }
 
         CompassQibla.Builder(this).onPermissionGranted { permission ->
-            Toast.makeText(this, "onPermissionGranted $permission", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "PermissionGranted", Toast.LENGTH_SHORT).show()
         }.onPermissionDenied {
-            Toast.makeText(this, "onPermissionDenied", Toast.LENGTH_SHORT).show()
-        }.onGetLocationAddress { address ->
-            tvLocation.text = buildString {
-                append(address.locality)
-                append(", ")
-                append(address.subAdminArea)
-                append("\n")
-                append(address.countryCode)
-                append("\n")
-                append(address.featureName)
-                append("\n")
-                append(address.latitude)
-                append("\n")
-                append(address.longitude)
-            }
+            Toast.makeText(this, "PermissionDenied", Toast.LENGTH_SHORT).show()
+            requestLocationPermission()
         }.onDirectionChangeListener { qiblaDirection ->
+
             tvDirection.text = if (qiblaDirection.isFacingQibla) "You're Facing Qibla"
             else "${qiblaDirection.needleAngle.toInt()}°"
 
-            val rotateCompass = RotateAnimation(
-                currentCompassDegree, qiblaDirection.compassAngle, Animation.RELATIVE_TO_SELF,
-                0.5f, Animation.RELATIVE_TO_SELF, 0.5f
-            ).apply {
+            val rotateCompass = RotateAnimation(currentCompassDegree, qiblaDirection.compassAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f).apply {
                 duration = 1000
             }
             currentCompassDegree = qiblaDirection.compassAngle
 
             ivCompass.startAnimation(rotateCompass)
-
 
             val frameCount = 60 // Number of frames for the animation
             val startDegree = currentNeedleDegree
@@ -105,6 +97,12 @@ class CompassActivity : AppCompatActivity() {
 //            ivNeedle.startAnimation(animationSet)
 
         }.build()
-        
+
     }
+    private fun requestLocationPermission() {
+        // Replace with your actual permission request logic
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION), 111)
+    }
+
+
 }

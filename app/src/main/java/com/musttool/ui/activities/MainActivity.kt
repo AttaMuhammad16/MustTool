@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import com.musttool.R
 import com.musttool.adapters.AppAdapter
 import com.musttool.models.AppModel
 import com.musttool.utils.Utils
+import io.github.derysudrajat.compassqibla.CompassQibla
 
 
 class MainActivity:AppCompatActivity() {
@@ -97,6 +99,14 @@ class MainActivity:AppCompatActivity() {
         recyclerView.layoutManager = layoutManger
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
+
+
+
+        CompassQibla.Builder(this).onPermissionGranted { permission ->
+            Toast.makeText(this, "PermissionGranted", Toast.LENGTH_SHORT).show()
+        }.onPermissionDenied {
+            Toast.makeText(this, "PermissionDenied", Toast.LENGTH_SHORT).show()
+        }
 
 
     }
