@@ -18,7 +18,10 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraManager
 import android.net.Uri
+import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Browser
@@ -33,6 +36,8 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
@@ -332,6 +337,36 @@ object Utils {
         } else {
             @Suppress("DEPRECATION")
             vibrator.vibrate(milliseconds)
+        }
+    }
+
+
+
+    @SuppressLint("ObsoleteSdkInt")
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun onFlash(context: Activity){
+        val cameraManager : CameraManager=context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
+        try{
+            var cameraId : String? = null
+            cameraId = cameraManager.cameraIdList[0]
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager?.setTorchMode(cameraId,true)
+            }
+        }catch (e: CameraAccessException){
+            Toast.makeText(context, "Something wrong", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun offFlash(context:Activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            val cameraManage = context.getSystemService(AppCompatActivity.CAMERA_SERVICE) as CameraManager
+            try {
+                val cameraId = cameraManage.cameraIdList[0]
+                cameraManage?.setTorchMode(cameraId,false)
+            }catch (e: CameraAccessException){
+                Toast.makeText(context, "Something wrong", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

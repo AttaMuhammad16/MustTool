@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -46,6 +47,13 @@ class BatteryInfo : AppCompatActivity() {
         batteryPresent=findViewById(R.id.batteryPresent)
         chargeSource=findViewById(R.id.chargingSource)
         charging=findViewById(R.id.charging)
+
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         // battery info
         val battery = Battery(this)

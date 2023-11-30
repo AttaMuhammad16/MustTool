@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.telephony.TelephonyManager
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +70,7 @@ class DeviceInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_device_info)
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
         manufacturer=findViewById(R.id.manufacturer)
         deviceNum=findViewById(R.id.deviceNum)
         version=findViewById(R.id.version)
@@ -91,6 +93,13 @@ class DeviceInfoActivity : AppCompatActivity() {
         screenDensity=findViewById(R.id.screenDensity)
         screenHeight=findViewById(R.id.screenHeight)
         screenWidth=findViewById(R.id.screenWidth)
+
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         // device info
         val device = Device(this)
@@ -150,57 +159,5 @@ class DeviceInfoActivity : AppCompatActivity() {
         screenWidth.text=ScreenWidth.toString()
 
 
-        // memory
-        val memory = Memory(this)
-        val totalRAMBytes = memory.totalRAM
-        val totalInternalMemorySizeBytes = memory.totalInternalMemorySize
-        val totalExternalMemorySizeBytes = memory.totalExternalMemorySize
-        val availableInternalMemorySizeBytes = memory.availableInternalMemorySize
-        val isHasExternalSDCard = memory.isHasExternalSDCard
-
-        val totalRAMGB = totalRAMBytes / (1024.0 * 1024 * 1024)
-        val totalInternalMemorySizeGB = totalInternalMemorySizeBytes / (1024.0 * 1024 * 1024)
-        val totalExternalMemorySizeGB = totalExternalMemorySizeBytes / (1024.0 * 1024 * 1024)
-        val availableInternalMemorySizeGB = availableInternalMemorySizeBytes / (1024.0 * 1024 * 1024)
-
-
-        // user location
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // Location permission is granted, you can proceed to use LocationInfo
-            val locationInfo = LocationInfo(this)
-            val location = locationInfo.location
-
-            val city = location.city
-            val latitude = location.latitude
-            val longitude = location.longitude
-            val countryCode = location.countryCode
-            val state = location.state
-            val addressLine1 = location.addressLine1
-
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
-        }
-
     }
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val locationInfo = LocationInfo(this)
-                val location = locationInfo.location
-
-                val city = location.city
-                val latitude = location.latitude
-                val longitude = location.longitude
-                val countryCode = location.countryCode
-                val addressLine1 = location.addressLine1
-                val state = location.state
-
-            } else {
-            }
-        }
-    }
-
 }

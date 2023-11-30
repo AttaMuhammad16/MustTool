@@ -1,6 +1,7 @@
 package com.musttool.ui.activities
 
 import android.content.Context
+import android.graphics.Color
 import android.hardware.display.DisplayManager
 import android.opengl.GLES20
 import android.opengl.GLES30
@@ -11,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.Display
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.LineChart
@@ -69,6 +71,13 @@ class CPUInfoActivity : AppCompatActivity() {
 
         lineChart=findViewById(R.id.lineChart)
 
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
         val textViews = listOf(textViewCore0, textViewCore1,textViewCore2,textViewCore3,textViewCore4,textViewCore5,textViewCore6,textViewCore7)
         cpuFrequencyUpdater = CpuFrequencyUpdater {
             runOnUiThread {
@@ -77,6 +86,7 @@ class CPUInfoActivity : AppCompatActivity() {
 
             }
         }
+
         cpuFrequencyUpdater.setTextViews(textViews)
         numberOfCores.text=numberOfCpuCores().toString()
 
@@ -85,11 +95,24 @@ class CPUInfoActivity : AppCompatActivity() {
         capuAbi.text=(Build.CPU_ABI).toString()
 
 
+        // Customize appearance
+        lineChart.axisLeft.textColor = Color.WHITE // Y-axis label color
+        lineChart.axisRight.textColor = Color.WHITE // Y-axis label color
+        lineChart.xAxis.textColor = Color.WHITE // X-axis label color
+        lineChart.legend.textColor = Color.WHITE // Legend color
+        lineChart.description.textColor = Color.WHITE // Description color
+
+        // Customize grid lines
+        lineChart.xAxis.gridColor = Color.parseColor("#404040") // Custom grid line color
+        lineChart.axisLeft.gridColor = Color.parseColor("#404040") // Custom grid line color
+        lineChart.axisRight.gridColor = Color.parseColor("#404040") // Custom grid line color
 
 
+        lineChart.xAxis.textColor = Color.WHITE
+        lineChart.legend.textColor = Color.WHITE
+        lineChart.setBorderColor(Color.WHITE)
 
 
-//        Log.i("TAG", "OS.ARCH : " + System.getProperty("os.arch"));
 
         val supportedAbis = Arrays.toString(Build.SUPPORTED_ABIS)
         supportAbi.text = supportedAbis.substring(1, supportedAbis.length - 1) // Remove square brackets
@@ -158,6 +181,8 @@ class CPUInfoActivity : AppCompatActivity() {
             val dataSet = LineDataSet(entries, "CPU Performance")
             dataSet.setColors(ColorTemplate.MATERIAL_COLORS.toList())
             dataSet.valueTextSize = 10f
+            dataSet.valueTextColor=Color.WHITE
+
 
             val dataSets = mutableListOf<ILineDataSet>()
             dataSets.add(dataSet)
@@ -166,8 +191,6 @@ class CPUInfoActivity : AppCompatActivity() {
             lineChart.data = lineData
             lineChart.invalidate()
         }
-
-
     }
 
 

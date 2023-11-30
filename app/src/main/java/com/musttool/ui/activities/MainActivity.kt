@@ -84,10 +84,10 @@ class MainActivity:AppCompatActivity() {
         apps.add(AppModel("Gyroscope Testing", R.drawable.gyroscope))
         apps.add(AppModel("Compass(direction)", R.drawable.navigation))
         apps.add(AppModel("Calculator", R.drawable.calculator))
-        apps.add(AppModel("Flash Light", R.drawable.flashlight))
-        apps.add(AppModel("Device Info", R.drawable.baseline_perm_device_information_24))
+        apps.add(AppModel("Flash Light", R.drawable.flash_icon))
+        apps.add(AppModel("Device Info", R.drawable.device))
         apps.add(AppModel("CPU Info", R.drawable.cpu))
-        apps.add(AppModel("Battery Info", R.drawable.battery))
+        apps.add(AppModel("Battery Info", R.drawable.battery_info))
         apps.add(AppModel("Available Sensors", R.drawable.sensor))
         apps.add(AppModel("SOS FlashLight", R.drawable.sos))
         apps.add(AppModel("Memory Usage", R.drawable.ram))
@@ -100,14 +100,11 @@ class MainActivity:AppCompatActivity() {
         adapter = AppAdapter(apps, this)
         recyclerView.adapter = adapter
 
-
-
         CompassQibla.Builder(this).onPermissionGranted { permission ->
             Toast.makeText(this, "PermissionGranted", Toast.LENGTH_SHORT).show()
         }.onPermissionDenied {
             Toast.makeText(this, "PermissionDenied", Toast.LENGTH_SHORT).show()
         }
-
 
     }
 
@@ -118,6 +115,5 @@ class MainActivity:AppCompatActivity() {
             Utils.exitDialog(this,"Do you want to Exit?","Yes","No")
         }
     }
-
 
 }
