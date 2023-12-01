@@ -10,6 +10,7 @@ import android.os.Environment
 import android.os.Handler
 import android.os.StatFs
 import android.util.Log
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -54,6 +55,13 @@ class RamUseage : AppCompatActivity() {
         memoryValue = findViewById(R.id.memoryValue)
         remainingMemoryTv = findViewById(R.id.remainingMemoryTv)
         usedMemoryTv = findViewById(R.id.usedMemoryTv)
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
+
 
 
         handler.postDelayed(object : Runnable {

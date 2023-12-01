@@ -3,20 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#009688"
+    android:background="@color/main_app_color"
     android:layout_height="match_parent"
-    tools:context=".activities.RamUseage">
+    tools:context=".ui.activities.RamUseage">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBAR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0AAEC5"
-        app:title="     Memory Monitor"
-        app:titleTextColor="@color/white"
+        android:background="@color/tool_bar_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white">
+
+        <ImageView
+            android:id="@+id/backArrowImg"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="-5dp"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_20sdp"
+            android:text="Memory Monitor"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/ramChart"
@@ -75,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"
-        android:backgroundTint="#09A6BA"
+        android:backgroundTint="@color/tool_bar_color"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_margin="10dp"
-        android:backgroundTint="#09A6BA"
+        android:backgroundTint="@color/tool_bar_color"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"

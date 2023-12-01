@@ -4,19 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".activities.SOSFlashLightActivity">
+    android:background="@color/main_app_color"
+    tools:context=".ui.activities.SOSFlashLightActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBAR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/myColor"
+        android:background="@color/tool_bar_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="     SOS Signals"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white">
+
+        <ImageView
+            android:id="@+id/backArrowImg"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="-5dp"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_20sdp"
+            android:text=" SOS FlashLight"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/textView25"
@@ -73,10 +88,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@drawable/edt_bac"
-        android:hint="Enter Your Message in between A-Z and  0-10 and special characters."
+        android:hint="Enter Your Message"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"

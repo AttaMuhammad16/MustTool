@@ -5,6 +5,7 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,13 @@ class AvailableSensors : AppCompatActivity() {
 
         recycler=findViewById(R.id.recycler)
         list= ArrayList()
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
         val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val availableSensors = sensorManager.getSensorList(Sensor.TYPE_ALL)

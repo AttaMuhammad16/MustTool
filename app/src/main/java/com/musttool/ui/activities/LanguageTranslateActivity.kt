@@ -1,5 +1,6 @@
 package com.musttool.ui.activities
 
+import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -41,10 +43,19 @@ class LanguageTranslateActivity : AppCompatActivity() {
         fromSpinner=findViewById(R.id.fromSpinner)
         toSpinner=findViewById(R.id.toSpinner)
 
+        toSpinner.background.setColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        fromSpinner.background.setColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
         val languages = resources.getStringArray(R.array.fromLanguages)
         val languageCodes = resources.getStringArray(R.array.FromLanguagesCode)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
+        val adapter = ArrayAdapter(this, R.layout.spinner_items_layout, languages)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         fromSpinner.adapter = adapter
         listener()
@@ -60,7 +71,7 @@ class LanguageTranslateActivity : AppCompatActivity() {
         }
 
 
-        val toAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
+        val toAdapter = ArrayAdapter(this, R.layout.spinner_items_layout, languages)
         toAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         toSpinner.adapter = toAdapter
 
@@ -88,9 +99,7 @@ class LanguageTranslateActivity : AppCompatActivity() {
                                 "&tl=$toLanguage" +
                                 "&ie=UTF-8&prev=_m" +
                                 "&q=$text"
-                    )
-                    .timeout(6000)
-                    .get()
+                    ).timeout(6000).get()
 
                     withContext(Dispatchers.Main) {
                         val element = doc.getElementsByClass("result-container")

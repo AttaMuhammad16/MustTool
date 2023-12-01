@@ -156,6 +156,13 @@ dependencies {
     implementation 'rebus:permission-utils:1.0.3'
 
 
+    // in app update
+    implementation("com.google.android.play:app-update:2.1.0")
+
+    // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
+
+
 }
 
 kapt {

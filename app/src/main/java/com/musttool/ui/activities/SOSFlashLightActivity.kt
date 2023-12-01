@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -45,6 +46,13 @@ class SOSFlashLightActivity : AppCompatActivity() {
         spaceBtn = findViewById(R.id.spaceBtn)
         edt = findViewById(R.id.edt)
         morseCodeTV = findViewById(R.id.morseCodeTV)
+        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+
+        backArrowImg.setOnClickListener {
+            Utils.navigationToMainActivity(this, backArrowImg) {
+                onBackPressed()
+            }
+        }
 
 
 
