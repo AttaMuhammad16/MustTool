@@ -145,7 +145,6 @@ object Utils {
             9 -> Animatoo.animateDiagonal(context)
             10 -> Animatoo.animateSplit(context)
         }
-
     }
 
 

@@ -62,7 +62,7 @@ class MainActivity:AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
         apps = ArrayList()
-        var menu=findViewById<ImageButton>(R.id.menu)
+        val menu=findViewById<ImageButton>(R.id.menu)
 
         menu.setOnClickListener {
             if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -78,6 +78,7 @@ class MainActivity:AppCompatActivity() {
         toggle = ActionBarDrawerToggle(this@MainActivity, drawer, R.string.open, R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
+
         navDrwer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.share -> {

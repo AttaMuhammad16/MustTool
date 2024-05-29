@@ -170,7 +170,7 @@ class TextExtracter : AppCompatActivity() {
             when (requestCode) {
 
                 REQUEST_CODE_TAKE_IMAGE_FROM_CAMERA -> { // image capture
-                    var contentUri = getCapturedImage(data, this)
+                    val contentUri = getCapturedImage(data, this)
                     if (contentUri != null) {
                         gotoCropActivity(this, contentUri, "DATA", REQUEST_CODE_IMAGE_FROM_CAMERA_TO_CROP_ACTIVITY)
                     } else {

@@ -22,7 +22,7 @@ class CropeActivity : AppCompatActivity() {
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
 
-        var bundle=intent.getStringExtra("DATA")
+        val bundle=intent.getStringExtra("DATA")
         uri=Uri.parse(bundle)
 
         val options = UCrop.Options()

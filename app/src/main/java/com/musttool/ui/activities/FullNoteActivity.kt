@@ -15,6 +15,7 @@ import com.musttool.R
 import com.musttool.utils.Utils
 
 class FullNoteActivity : AppCompatActivity() {
+
     var title=""
     var des=""
     var date=""
@@ -25,6 +26,7 @@ class FullNoteActivity : AppCompatActivity() {
     lateinit var constraint:ConstraintLayout
     lateinit var scroll:ScrollView
     lateinit var copyContent:ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_note)
@@ -36,8 +38,9 @@ class FullNoteActivity : AppCompatActivity() {
         constraint=findViewById(R.id.constraint)
         scroll=findViewById(R.id.scroll)
         copyContent=findViewById(R.id.copyContent)
-        var toolBar=findViewById<Toolbar>(R.id.toolBar)
-        var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
+
+        val toolBar=findViewById<Toolbar>(R.id.toolBar)
+        val backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
 
         title=intent.getStringExtra("title").toString()
         des=intent.getStringExtra("des").toString()
@@ -65,7 +68,7 @@ class FullNoteActivity : AppCompatActivity() {
 
         copyContent.setOnClickListener {
             Utils.rippleEffect(this,copyContent)
-            var data=date+"\n"+title+"\n"+des
+            val data=date+"\n"+title+"\n"+des
             Utils.copyContentText(data,this)
             Utils.myToast(this,"Text copied to clipboard", Toast.LENGTH_SHORT)
 

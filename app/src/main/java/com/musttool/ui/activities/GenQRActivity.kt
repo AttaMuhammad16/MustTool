@@ -78,7 +78,7 @@ class GenQRActivity : AppCompatActivity() {
             if(::bitmap.isInitialized){
                 val defaultUri: Uri = Uri.parse("")
                 val imageUri: Uri = QrCodeGenViewModel.getImageUri(this, bitmap) ?: defaultUri  // backend class
-                Utils.shareImage(this@GenQRActivity,imageUri)
+                shareImage(this@GenQRActivity,imageUri)
             }else{
                 Utils.myToast(this,"Qr Not Available Yet.",Toast.LENGTH_SHORT)
             }
