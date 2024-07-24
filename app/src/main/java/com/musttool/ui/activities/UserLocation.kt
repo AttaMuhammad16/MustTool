@@ -53,12 +53,12 @@ class UserLocation : AppCompatActivity() {
             val addressLine1 = location.addressLine1
 
 
-            cityTv.text=city.toString()
-            latitudeTv.text=latitude.toString()
-            longitudeTv.text=longitude.toString()
-            countryCodeTv.text=countryCode.toString()
-            stateTv.text=state.toString()
-            addressLine1Tv.text=addressLine1.toString()
+            cityTv.text=city?.toString()?:"null"
+            latitudeTv.text=latitude?.toString()?:"null"
+            longitudeTv.text=longitude?.toString()?:"null"
+            countryCodeTv.text=countryCode?.toString()?:"null"
+            stateTv.text=state?.toString()?:"null"
+            addressLine1Tv.text=addressLine1?.toString()?:"null"
 
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)

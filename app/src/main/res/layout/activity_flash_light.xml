@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/_20sdp"
-            android:text="Calculator"
+            android:text="Flash Light"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_15sdp" />
     </androidx.appcompat.widget.Toolbar>
