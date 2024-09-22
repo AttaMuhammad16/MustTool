@@ -21,6 +21,7 @@ class FlashLightActivity : AppCompatActivity() {
         Utils.statusBarColor(this, R.color.myColor)
         systemBottomNavigationBlackColor(this, R.color.black)
         var img=findViewById<ImageView>(R.id.img)
+
         var backArrowImg = findViewById<ImageView>(R.id.backArrowImg)
         backArrowImg.setOnClickListener {
             Utils.navigationToMainActivity(this, backArrowImg) {

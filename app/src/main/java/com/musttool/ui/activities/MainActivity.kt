@@ -55,6 +55,7 @@ class MainActivity:AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Utils.statusBarColor(this, R.color.myColor)
         Utils.systemBottomNavigationColor(this, R.color.navigation_bar_color)
+
         appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity)
         appUpdateInfoTask = appUpdateManager.appUpdateInfo
 

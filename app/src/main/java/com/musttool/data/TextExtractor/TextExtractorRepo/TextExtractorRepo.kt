@@ -7,5 +7,5 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.mlkit.vision.text.TextRecognizer
 
 interface TextExtractorRepo {
-    fun processImage(context:Activity,scanningBar:LottieAnimationView,extractText: TextView,bitmap: Bitmap,recognizer: TextRecognizer)
+    fun processImage(context:Activity,scanningBar:LottieAnimationView,extractText: TextView,bitmap: Bitmap,recognizer: com.google.android.gms.vision.text.TextRecognizer)
 }

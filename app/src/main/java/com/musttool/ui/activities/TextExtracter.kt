@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -17,7 +18,10 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.vision.Frame
+import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.musttool.R
@@ -34,22 +38,26 @@ import com.musttool.utils.Utils.gotoCropActivity
 import com.musttool.utils.Utils.myToast
 import com.musttool.utils.Utils.takeImageFromCamera
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class TextExtracter : AppCompatActivity() {
-    lateinit var imageView: ImageView
-    lateinit var extractedText: TextView
-    lateinit var captureBtn: Button
-    lateinit var extractBtn: Button
-    lateinit var clear: Button
-    lateinit var pickImage: Button
-    lateinit var copyBtn: Button
-    var recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    private lateinit var imageView: ImageView
+    private lateinit var extractedText: TextView
+    private lateinit var captureBtn: Button
+    private lateinit var extractBtn: Button
+    private lateinit var clear: Button
+    private lateinit var pickImage: Button
+    private lateinit var copyBtn: Button
+    private lateinit var recognizer :com.google.android.gms.vision.text.TextRecognizer
     private var bitmap: Bitmap? = null
-    lateinit var lottieAnim: LottieAnimationView
-    lateinit var scanningBar: LottieAnimationView
+    private lateinit var lottieAnim: LottieAnimationView
+    private lateinit var scanningBar: LottieAnimationView
 
     @Inject
     lateinit var cameraPermissionHandler: CameraPermissionHandler
@@ -59,6 +67,7 @@ class TextExtracter : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_extracter)
+        recognizer=com.google.android.gms.vision.text.TextRecognizer.Builder(this).build()
 
         imageView = findViewById(R.id.imageView)
         extractedText = findViewById(R.id.extractedText)
@@ -106,7 +115,9 @@ class TextExtracter : AppCompatActivity() {
 
 
         extractBtn.setOnClickListener {
-            processImage()
+            if (bitmap!=null){
+                recognizeTextFromImage()
+            }
         }
 
         pickImage.setOnClickListener {
@@ -151,14 +162,14 @@ class TextExtracter : AppCompatActivity() {
         getImageFromGallery(this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun processImage() { // get text from image
-        if (bitmap != null) {
-            textExtractorViewModel.getTextFromRecognizer(this@TextExtracter, scanningBar, extractedText, bitmap!!, recognizer)
-        } else {
-            myToast(this, "Take Image", Toast.LENGTH_SHORT)
-        }
-    }
+//    private fun processImage() {
+//        if (bitmap != null) {
+////            textExtractorViewModel.getTextFromRecognizer(this@TextExtracter, scanningBar, extractedText, bitmap!!, recognizer)
+//
+//        } else {
+//            myToast(this, "Take Image", Toast.LENGTH_SHORT)
+//        }
+//    }
 
     private fun takeImage() { // capture image
         takeImageFromCamera(this)
@@ -200,15 +211,47 @@ class TextExtracter : AppCompatActivity() {
 
 
                 REQUEST_CODE_IMAGE_FROM_GALLERY_TO_CROP_ACTIVITY -> {  // image select
-                    var bundle = data?.getStringExtra("RESULT")
+                    val bundle = data?.getStringExtra("RESULT")
                     if (bundle !== null) {
-                        var uri = Uri.parse(bundle)
-                        bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+                        val uri = Uri.parse(bundle)
+                        bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
                         imageView.setImageBitmap(bitmap)
                     }
                 }
-
             }
         }
     }
+
+
+    private fun recognizeTextFromImage() {
+        // Show the scanning animation
+        scanningBar.visibility = View.VISIBLE
+
+        // Create an InputImage from the bitmap
+        val inputImage = InputImage.fromBitmap(bitmap!!, 0)
+
+        // Get an instance of TextRecognizer
+        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+        // Process the image
+        recognizer.process(inputImage)
+            .addOnSuccessListener { visionText ->
+                val recognizedText = visionText.text
+                extractedText.text = if (recognizedText.isNotEmpty()) {
+                    recognizedText.trim()
+                } else {
+                    "No text found in the image."
+                }
+                scanningBar.visibility = View.GONE
+            }
+            .addOnFailureListener { exception ->
+                // Handle errors
+                Log.e("TAG", "Text recognition failed: ${exception.localizedMessage}")
+                extractedText.text = "Text recognition failed."
+                scanningBar.visibility = View.GONE
+            }
+    }
+
+
+
 }

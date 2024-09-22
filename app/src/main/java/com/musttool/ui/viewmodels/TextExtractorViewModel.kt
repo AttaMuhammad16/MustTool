@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TextExtractorViewModel @Inject constructor(val textExtractorRepo: TextExtractorRepo):ViewModel() {
-    fun getTextFromRecognizer(context: Activity, scanningBar: LottieAnimationView, extractText: TextView, bitmap: Bitmap, recognizer: TextRecognizer){
+    fun getTextFromRecognizer(context: Activity, scanningBar: LottieAnimationView, extractText: TextView, bitmap: Bitmap, recognizer: com.google.android.gms.vision.text.TextRecognizer){
         viewModelScope.launch {
             textExtractorRepo.processImage(context, scanningBar, extractText, bitmap, recognizer)
         }
