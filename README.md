@@ -15,9 +15,7 @@
 - 💡 **Flashlight / Torch**
 - 🚨 **SOS Emergency Blinker**
 - 📓 **Notes Creator**
-- 🔐 **Password Generator** *(if included)*
-- 📏 **Ruler Tool** *(if included)*
-- 📅 **Date & Time Tools** *(if included)*
+- many more...
 
 ... and many more powerful tools in one lightweight app!
 
@@ -61,7 +59,7 @@ https://drive.google.com/file/d/17jz2KoVfwLF_T2kbdocB0Fj87HDnZ6uw/view?usp=shari
 
 👤 Developer & Contact
 
-Developed by: Atta Muhammad
+**Developed by: Atta Muhammad**
 📧 Email: atta1639916@gmail.com
 📱 Phone: +92 303 4805685
 🌐 LinkedIn: [(Profile Link)](https://www.linkedin.com/in/atta-muhammad-787984267/)
