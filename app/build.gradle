@@ -103,7 +103,7 @@ dependencies {
 
     // compass(direction)
     implementation 'com.github.derysudrajat:compass-qibla:1.0.0'
-    
+
     // device info i have add a module classes.jar file in my libs folder
 //    implementation 'com.an.deviceinfo:deviceinfo:0.1.5'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -148,7 +148,7 @@ dependencies {
 
     // Neu-morphism
     implementation 'com.github.fornewid:neumorphism:0.3.2'
-    
+
 
 
     // in app update
